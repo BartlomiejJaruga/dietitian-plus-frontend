@@ -1,4 +1,4 @@
-# Dietitian+
+# Dietitian+ (Frontend)
 A comprehensive website application designed for people looking to lose weight and professional dietitians. <br>
 It allows dietitians to create meal plans, generate shopping lists, and manage client progress, while users can access personalized diets and track their BMI.
 
