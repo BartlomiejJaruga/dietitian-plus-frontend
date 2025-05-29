@@ -11,10 +11,13 @@ export default function NavBar({ navBarColor="white", logoColor="green" }){
             <Link to="/">
                 <img src={logoSrc} alt={`dietitian+_${logoColor}_logo`} className={styles.navbar_logo} />
             </Link>
+            <Link to="/getStarted">Get Started</Link>
             <Link to="/auth">Sign In</Link>
             <Link to="/auth">Sign Up</Link>
+            <Link to="/patient/1/questionnaire">Questionnaire</Link>
             <Link to="/dietitian/1/dashboard">Dietitian Dashboard</Link>
             <Link to="/patient/1/dashboard">Patient Dashboard</Link>
+            <Link to="/patient/1/aboutMe">Patient About Me</Link>
         </div>
     );
 }

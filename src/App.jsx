@@ -1,3 +1,5 @@
+import './App.scss'
+
 import { Routes, Route } from 'react-router-dom'
 import HomePage from '@pages/HomePage/HomePage'
 import AuthPage from '@pages/AuthPage/AuthPage'
@@ -7,33 +9,37 @@ import DietitianDashboardPage from '@pages/DietitianDashboardPage/DietitianDashb
 import UnauthorizedPage from '@pages/UnauthorizedPage/UnauthorizedPage'
 import PatientRoute from '@routes/PatientRoute'
 import PatientDashboardPage from '@pages/PatientDashboardPage/PatientDashboardPage'
-
-import { useState } from 'react'
-import './App.scss'
+import GetStartedPage from '@pages/GetStartedPage/GetStartedPage'
+import PatientQuestionnairePage from '@pages/PatientQuestionnairePage/PatientQuestionnairePage'
+import PatientAboutMePage from '@pages/PatientAboutMePage/PatientAboutMePage'
 
 function App() {
 
-  return (
-      <>
-          <Routes>
-              {/* PUBLIC routes */}
-              <Route path='/' element={<HomePage/>} />    
-              <Route path='/auth' element={<AuthPage/>} />
-              <Route path='/unauthorized' element={<UnauthorizedPage/>} />    
-              <Route path='*' element={<NotFoundPage/>} />
 
-              {/* Protected DIETITIAN routes */}
-              <Route element={<DietitianRoute/>}>
-                  <Route path="/dietitian/:dietitianId/dashboard" element={<DietitianDashboardPage/>} />
-              </Route>
+    return (
+        <>
+            <Routes>
+                    {/* PUBLIC routes */}
+                    <Route path='/' element={<HomePage/>} />    
+                    <Route path='/auth' element={<AuthPage/>} />
+                    <Route path='/getStarted' element={<GetStartedPage/>} />
+                    <Route path='/unauthorized' element={<UnauthorizedPage/>} />
+                    <Route path='*' element={<NotFoundPage/>} />
 
-              {/* Protected PATIENT routes */}
-              <Route element={<PatientRoute/>}>
-                    <Route path="/patient/:patientId/dashboard" element={<PatientDashboardPage/>} />
-              </Route>
-          </Routes>
-      </>
-  )
+                    {/* Protected DIETITIAN routes */}
+                    <Route element={<DietitianRoute/>}>
+                        <Route path="/dietitian/:dietitianId/dashboard" element={<DietitianDashboardPage/>} />
+                    </Route>
+
+                    {/* Protected PATIENT routes */}
+                    <Route element={<PatientRoute/>}>
+                        <Route path="/patient/:patientId/dashboard" element={<PatientDashboardPage/>} />
+                        <Route path="/patient/:patientId/questionnaire" element={<PatientQuestionnairePage/>} />
+                        <Route path="/patient/:patientId/aboutMe" element={<PatientAboutMePage/>} />
+                    </Route>
+            </Routes>
+        </>
+    )
 }
 
 export default App
