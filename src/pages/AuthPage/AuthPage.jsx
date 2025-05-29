@@ -12,6 +12,7 @@ export default function AuthPage(){
 
     const handleAuthenticate = (user_type) => {
         console.log(user_type);
+
         let userInfo;
         if(user_type === userRolesENUM.DIETITIAN){
             userInfo = {
@@ -40,8 +41,8 @@ export default function AuthPage(){
             <NavBar />
             <div className={styles.authpage_container}>
                 <h1>Authenticate yourself!</h1>
-                <button onClick={() => handleAuthenticate(userRolesENUM.DIETITIAN)}>Authenticate me as Dietitian</button>
-                <button onClick={() => handleAuthenticate(userRolesENUM.PATIENT)}>Authenticate me as Patient</button>
+                <button onClick={() => handleAuthenticate(userRolesENUM.DIETITIAN)} className={styles.auth_dietitian_button}>Authenticate me as Dietitian</button>
+                <button onClick={() => handleAuthenticate(userRolesENUM.PATIENT)} className={styles.auth_patient_button}>Authenticate me as Patient</button>
             </div>
         </>
     )

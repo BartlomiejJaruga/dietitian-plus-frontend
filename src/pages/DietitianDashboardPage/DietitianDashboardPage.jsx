@@ -3,9 +3,11 @@ import styles from "./DietitianDashboardPage.module.scss";
 import NavBar from "@components/NavBar/NavBar";
 import Arrow from "@icons/simple-arrow-left.svg?react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function DietitianDashboardPage(){
     const navigate = useNavigate();
+    const user = useSelector((state) => state.auth.userData);
 
     const handleReturn = () => {
         navigate("/");
@@ -20,6 +22,7 @@ export default function DietitianDashboardPage(){
             </div>
             <div className={styles.dietitian_dashboard_page_container}>
                 <h1>Dietitian Dashboard Page</h1>
+                <span>{`Hello ${user.first_name} ${user.last_name} (${user.email})!`}</span>
             </div>
         </>
         
