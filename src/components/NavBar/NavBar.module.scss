@@ -1,0 +1,21 @@
+.navbar_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    width: 100vw;
+    height: 5rem;
+}
+
+.navbar_container--white {
+    background-color: $White;
+}
+
+.navbar_container--green {
+    background-color: $Dark-Green;
+}
+
+.navbar_logo {
+    scale: 0.8;
+}

@@ -1,0 +1,29 @@
+.dietitian_dashboard_page_container {
+    margin-top: 3rem;
+}
+
+.return_to_home_page_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.return_to_home_page_button span {
+    margin-left: 0.5em;
+}
+
+.return_to_home_page_button_arrow {
+    color: inherit;
+}
+
+.return_to_home_page_button:hover {
+    color: $Green;
+    text-decoration: underline;
+}
+
+.return_to_home_page_button:hover .return_to_home_page_button_arrow {
+    fill: $Green;
+}

@@ -1,0 +1,42 @@
+@use "sass:color";
+
+// ========== FONTS ==========
+
+$font-headings: (
+  font-family: ('Work Sans', sans-serif),
+  font-weight: 400
+);
+
+$font-general: (
+  font-family: ('Inter', sans-serif),
+  font-weight: 300
+);
+
+@mixin apply-font($font-map) {
+  @each $prop, $value in $font-map {
+    #{$prop}: #{$value};
+  }
+}
+
+// ========== COLORS ==========
+
+// ---- MAIN COLORS PALLETE ----
+$Dark-Green: #256F29;
+$Green: #4CAF50;
+$Green-Hover: color.adjust($Green, $lightness: -10%);
+$White: #ffffff;
+$Darker-White: #ebebeb;
+$Black: #000000;
+$Lighter-Black: #2f2f2f;
+$Gray: #666666;
+$Beige: #F9CBA7;
+$Light-Blue: #00C8DF;
+
+
+// ---- TEXT COLORS PALLETE ----
+$Text-Black-Headers: #1a1a1a;
+$Text-Black-Texts: #333333;
+$Text-Black-SubTexts: #666666;
+$Text-White-Headers: #ffffff;
+$Text-White-Texts: #f5f5f5;
+$Text-White-SubTexts: #cccccc;

@@ -1,0 +1,30 @@
+// *
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+// ========== :ROOT ==========
+
+:root {
+  @include apply-font($font-general);
+  
+  /* color-scheme: light dark; */
+  background-color: $Darker-White;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ========== GLOBAL TAGS AND CLASSES ==========
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
