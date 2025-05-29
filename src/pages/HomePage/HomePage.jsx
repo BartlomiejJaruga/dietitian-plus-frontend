@@ -6,7 +6,7 @@ export default function HomePage(){
     
     return (
         <>
-            <NavBar />
+            <NavBar navBarColor="green" logoColor="white"/>
             <div className={styles.homepage_container}>
             <img src="/logo_green.png" alt="Dietitian+ Green Logo"/>
                 <h1>Welcome to Dietitian+ Page!</h1>
