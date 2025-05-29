@@ -5,6 +5,8 @@ import NotFoundPage from '@pages/NotFoundPage/NotFoundPage'
 import DietitianRoute from '@routes/DietitianRoute'
 import DietitianDashboardPage from '@pages/DietitianDashboardPage/DietitianDashboardPage'
 import UnauthorizedPage from '@pages/UnauthorizedPage/UnauthorizedPage'
+import PatientRoute from '@routes/PatientRoute'
+import PatientDashboardPage from '@pages/PatientDashboardPage/PatientDashboardPage'
 
 import { useState } from 'react'
 import './App.scss'
@@ -23,6 +25,11 @@ function App() {
               {/* Protected DIETITIAN routes */}
               <Route element={<DietitianRoute/>}>
                   <Route path="/dietitian/:dietitianId/dashboard" element={<DietitianDashboardPage/>} />
+              </Route>
+
+              {/* Protected PATIENT routes */}
+              <Route element={<PatientRoute/>}>
+                    <Route path="/patient/:patientId/dashboard" element={<PatientDashboardPage/>} />
               </Route>
           </Routes>
       </>

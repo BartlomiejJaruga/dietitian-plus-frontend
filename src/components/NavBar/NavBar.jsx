@@ -13,7 +13,8 @@ export default function NavBar({ navBarColor="white", logoColor="green" }){
             </Link>
             <Link to="/auth">Sign In</Link>
             <Link to="/auth">Sign Up</Link>
-            <Link to="/dietitian/1/dashboard">Dashboard</Link>
+            <Link to="/dietitian/1/dashboard">Dietitian Dashboard</Link>
+            <Link to="/patient/1/dashboard">Patient Dashboard</Link>
         </div>
     );
 }
