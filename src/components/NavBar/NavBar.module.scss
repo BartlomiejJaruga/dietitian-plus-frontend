@@ -12,8 +12,16 @@
     background-color: $White;
 }
 
+.navbar_container--white a {
+    color: $Text-Black-Texts;
+}
+
 .navbar_container--green {
     background-color: $Dark-Green;
+}
+
+.navbar_container--green a {
+    color: $Text-White-Texts;
 }
 
 .navbar_logo {

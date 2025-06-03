@@ -12,6 +12,8 @@ import PatientDashboardPage from '@pages/PatientDashboardPage/PatientDashboardPa
 import GetStartedPage from '@pages/GetStartedPage/GetStartedPage'
 import PatientQuestionnairePage from '@pages/PatientQuestionnairePage/PatientQuestionnairePage'
 import PatientAboutMePage from '@pages/PatientAboutMePage/PatientAboutMePage'
+import DietitianDishesPage from '@pages/DietitianDishesPage/DietitianDishesPage'
+import DietitianPatientsPage from '@pages/DietitianPatientsPage/DietitianPatientsPage'
 
 function App() {
 
@@ -28,14 +30,16 @@ function App() {
 
                     {/* Protected DIETITIAN routes */}
                     <Route element={<DietitianRoute/>}>
-                        <Route path="/dietitian/:dietitianId/dashboard" element={<DietitianDashboardPage/>} />
+                        <Route path="/dietitian/dashboard" element={<DietitianDashboardPage/>} />
+                        <Route path="/dietitian/dishes" element={<DietitianDishesPage/>} />
+                        <Route path="/dietitian/patients" element={<DietitianPatientsPage/>} />
                     </Route>
 
                     {/* Protected PATIENT routes */}
                     <Route element={<PatientRoute/>}>
-                        <Route path="/patient/:patientId/dashboard" element={<PatientDashboardPage/>} />
-                        <Route path="/patient/:patientId/questionnaire" element={<PatientQuestionnairePage/>} />
-                        <Route path="/patient/:patientId/aboutMe" element={<PatientAboutMePage/>} />
+                        <Route path="/patient/dashboard" element={<PatientDashboardPage/>} />
+                        <Route path="/patient/questionnaire" element={<PatientQuestionnairePage/>} />
+                        <Route path="/patient/aboutMe" element={<PatientAboutMePage/>} />
                     </Route>
             </Routes>
         </>
