@@ -1,22 +1,90 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
 .authpage_container {
-    margin-top: 3rem;
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.authpage_container button {
-    width: 12rem;
-    height: 3rem;
-    background-color: $Green;
-    color: $Text-White-Texts;
-    border: none;
-    border-radius: 1rem;
-    box-shadow: 0.3em 0.3em 0.2em rgba(0,0,0,0.25);
+.register_dietitian_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include respond(xl) {
+        justify-content: space-evenly;
+    }
+    @include respond(lg) {
+        justify-content: space-evenly;
+    }
+    @include respond(md) {
+        justify-content: space-evenly;
+    }
+    @include respond(sm) {
+        justify-content: space-evenly;
+    }
 }
 
-.auth_dietitian_button {
-    margin-right: 1rem;
+.register_dietitian_photo_and_quote {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.auth_patient_button {
+.register_dietitian_photo_and_quote img {
+    max-width: 100%;
+    height: auto;
+}
+
+.register_dietitian_photo_and_quote h1 {
+    font-size: 2rem;
     @include apply-font($font-headings);
+    margin-top: 1rem;
 }
 
+
+.register_patient_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @include respond(xl) {
+        justify-content: space-evenly;
+    }
+    @include respond(lg) {
+        justify-content: space-evenly;
+    }
+    @include respond(md) {
+        justify-content: space-evenly;
+    }
+    @include respond(sm) {
+        justify-content: space-evenly;
+    }
+}
+
+.register_patient_photo_and_quote {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.register_patient_photo_and_quote img {
+    max-width: 110%;
+    height: auto;
+}
+
+.register_patient_photo_and_quote h1 {
+    font-size: 2rem;
+    @include apply-font($font-headings);
+    margin-top: 1rem;
+}

@@ -21,7 +21,7 @@ export default function PatientDashboardPage(){
                 <span>Return to Home Page</span>
             </div>
             <div className={styles.patient_dashboard_page_container}>
-                <h1>Dietitian Dashboard Page</h1>
+                <h1>Patient Dashboard Page</h1>
                 <span>{`Hello ${user.first_name} ${user.last_name} (${user.email})!`}</span>
             </div>
         </>

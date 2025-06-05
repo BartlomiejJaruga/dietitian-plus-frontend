@@ -21,6 +21,23 @@ export const authSlice = createSlice({
             state.userData.first_name = action.payload.first_name;
             state.userData.last_name = action.payload.last_name;
             state.userData.user_type = action.payload.user_type;
+        },
+        registerDietitian(state, action){
+            state.isAuthenticated = true;
+            state.userData.email = action.payload.email;
+            state.userData.first_name = action.payload.first_name;
+            state.userData.last_name = action.payload.last_name;
+            state.userData.user_type = userRolesENUM.DIETITIAN;
+            
+            console.log({ ...state.userData });
+        },
+        registerPatient(state, action){
+            state.isAuthenticated = true;
+            state.userData.email = action.payload.email;
+            state.userData.first_name = action.payload.first_name;
+            state.userData.last_name = action.payload.last_name;
+            state.userData.user_type = userRolesENUM.PATIENT;
+            
             console.log({ ...state.userData });
         },
         logoutUser(state){
@@ -29,10 +46,9 @@ export const authSlice = createSlice({
             state.userData.first_name = null;
             state.userData.last_name = null;
             state.userData.user_type = userRolesENUM.GUEST;
-            console.log({ ...state.userData });
         },
     },
 });
 
-export const { authenticateUser, logoutUser } = authSlice.actions;
+export const { authenticateUser, registerDietitian, registerPatient, logoutUser } = authSlice.actions;
 export default authSlice.reducer;

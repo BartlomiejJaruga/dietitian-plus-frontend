@@ -1,0 +1,76 @@
+.main_container {
+    width: 50%;
+    height: 75%;
+    background-color: $White;
+    box-shadow: 0 0 0.8em 0.05em rgba(0,0,0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+}
+
+.dietitian_register_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 60%;
+}
+
+.form_label {
+    @include apply-font($font-headings);
+    font-size: 1.2rem;
+}
+
+.form_input {
+    width: 100%;
+    margin-top: 0.5em;
+    background-color: $Darker-White;
+    border-radius: 0.5em;
+    border: none;
+    box-shadow: 0 0.1em 0.1em $Text-Black-SubTexts inset,
+                0 -0.005em 0.05em $Text-Black-SubTexts inset;
+    font-size: 1.2rem;
+    color: $Text-Black-Texts;
+    padding: 0.3em 0.5em;
+}
+
+.form_input:focus {
+    outline: none;
+    box-shadow: 0 0 0.2em 0.1em $Green,
+                0 0.1em 0.1em $Text-Black-SubTexts inset;
+}
+
+.input_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 1em;
+    width: 100%;
+}
+
+.error_message {
+    color: $Red;
+}
+
+.form_submit_button {
+    width: auto;
+    height: 2.5em;
+    background-color: $Green;
+    font-size: 1rem;
+    color: $Text-White-Texts;
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.3em 0.3em 0.05em rgba(0,0,0,0.25);
+    padding: 0 1em;
+    margin-top: 2em;
+    cursor: pointer;
+    @include apply-font($font-headings);
+    transition: 0.2s background-color ease;
+}
+
+.form_submit_button:hover {
+    background-color: $Green-Hover;
+}
