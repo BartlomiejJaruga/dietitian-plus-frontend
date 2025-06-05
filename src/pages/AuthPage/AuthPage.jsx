@@ -1,49 +1,39 @@
 import styles from "./AuthPage.module.scss";
 
 import NavBar from "@components/NavBar/NavBar";
-import { userRolesENUM } from "@enums";
-import { useDispatch } from "react-redux";
-import { authenticateUser } from "@slices/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import DietitianRegisterForm from "@components/DietitianRegisterForm/DietitianRegisterForm";
+import PatientRegisterForm from "@components/PatientRegisterForm/PatientRegisterForm";
+import dietitianImage from "@images/AuthPage/anime_dietitian_person.png";
+import healthBowlImage from "@images/AuthPage/healthy_products_bowl.png";
 
 export default function AuthPage(){
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const [ searchParams, setSearchParams ] = useSearchParams();
 
-    const handleAuthenticate = (user_type) => {
-        console.log(user_type);
-
-        let userInfo;
-        if(user_type === userRolesENUM.DIETITIAN){
-            userInfo = {
-                email: "dietitian@gmail.com",
-                first_name: "Frodo",
-                last_name: "Baggins",
-                user_type: userRolesENUM.DIETITIAN,
-            }
-        }
-        else {
-            userInfo = {
-                email: "patient@gmail.com",
-                first_name: "Gandalf",
-                last_name: "The White",
-                user_type: userRolesENUM.PATIENT,
-            }
-        }
-
-        dispatch(authenticateUser(userInfo));
-        navigate("/");
-    }
 
 
     return (
-        <>  
+        <div className={styles.layout}>  
             <NavBar />
             <div className={styles.authpage_container}>
-                <h1>Authenticate yourself!</h1>
-                <button onClick={() => handleAuthenticate(userRolesENUM.DIETITIAN)} className={styles.auth_dietitian_button}>Authenticate me as Dietitian</button>
-                <button onClick={() => handleAuthenticate(userRolesENUM.PATIENT)} className={styles.auth_patient_button}>Authenticate me as Patient</button>
+                {searchParams.get("authType") === "register_dietitian" && 
+                <div className={styles.register_dietitian_container}>
+                    <div className={styles.register_dietitian_photo_and_quote}>
+                        <img src={dietitianImage} alt="anime dietitian image"/>
+                        <h1>Be the key to your clients'<br/>nutritional success.</h1>
+                    </div>
+                    <DietitianRegisterForm/>
+                </div>}
+                {searchParams.get("authType") === "register_patient" && 
+                <div className={styles.register_patient_container}>
+                    <PatientRegisterForm/>
+                    <div className={styles.register_patient_photo_and_quote}>
+                        <img src={healthBowlImage} alt="bowl of healthy products"/>
+                        <h1>Eat smart, feel better.</h1>
+                    </div>
+                </div>}
             </div>
-        </>
+            
+        </div>
     )
 }
