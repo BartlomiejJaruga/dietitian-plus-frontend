@@ -36,7 +36,7 @@ export default function PatientQuestionnairePage() {
         case FormStep.AllergiesAndDislikeProducts:
             return <AllergiesAndDislikeProducts onNext={goNext} onBack={goBack} />;
         case FormStep.Agreement:
-            return <Agreement onBack={goBack} />;
+            return <Agreement onBack={goBack} onNext={goBack} />;
         default:
             return null;
         }
@@ -44,7 +44,6 @@ export default function PatientQuestionnairePage() {
 
     return (
         <>
-            <NavBar/>
             <div className={styles.patient_questionnaire_container}>
                 {renderStep()}
             </div>
