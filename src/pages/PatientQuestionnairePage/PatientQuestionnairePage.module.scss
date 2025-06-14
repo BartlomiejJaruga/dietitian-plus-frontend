@@ -1,3 +1,13 @@
 .patient_questionnaire_container {
-    margin-top: 3rem;
+    background-color: #F5F5F5;
+    height: 100%;
+    padding-top: 2rem;
 }
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
