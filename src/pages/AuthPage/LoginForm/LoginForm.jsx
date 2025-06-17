@@ -1,15 +1,20 @@
 import styles from './LoginForm.module.scss';
 
-import { useState, useId } from 'react';
+import { useState, useId, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from "@slices/authSlice";
 import { userRolesENUM } from '@enums';
+import axiosInstance from '@services/axiosInstance';
+import LoadingIndicator from '@components/LoadingIndicator/LoadingIndicator';
 
 export default function LoginForm() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const uniqueId = useId();
+    const isUserAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const authenticatedUserType = useSelector((state) => state.auth.userData.user_type);
+    const [signingInInProgress, setSigningInInProgress] = useState(false);
 
     const [formData, setFormData] = useState({
         email: "",
@@ -20,6 +25,7 @@ export default function LoginForm() {
     const [errors, setErrors] = useState({
         email_error: "",
         password_error: "",
+        bad_data_error: "",
     });
 
     const handleFormInputChange = (e) => {
@@ -61,23 +67,69 @@ export default function LoginForm() {
         return formValid;
     }
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
 
         if(!validateFormData()) return;
 
-        const { rememberMe, ...strippedFormData } = formData;
+        setSigningInInProgress(true);
+        const { rememberMe, ...requestBody } = formData;
 
-        let userInfo = {
-            email: strippedFormData.email,
-            first_name: "placeholder_name",
-            last_name: "placeholder_last_name",
-            user_type: userRolesENUM.PATIENT,
+        try{
+            const response = await axiosInstance.post('/v1/auth/authenticate', requestBody);
+
+            sessionStorage.setItem("Bearer_token", response.data.access_token)
+            localStorage.setItem("Refresh_token", response.data.refresh_token)
+
+            const userInfo = {
+                email: requestBody.email,
+                first_name: response.data.first_name,
+                last_name: response.data.last_name,
+                user_type: response.data.role,
+            }
+
+            // setErrors((prev) => ({ ...prev, bad_data_error: "" }));
+            // setSigningInInProgress(false);
+            dispatch(loginUser(userInfo));
+
+            if(userInfo.user_type === userRolesENUM.PATIENT){
+                navigate("/patient/dashboard");
+            }
+            else if(userInfo.user_type === userRolesENUM.DIETITIAN){
+                navigate("/dietitian/dashboard");
+            }
+            else{
+                console.error("Unknown user type passed by server");
+            }
         }
-
-        dispatch(loginUser(userInfo));
-        navigate("/patient/dashboard");
+        catch(error){
+            if(error.response && error.response.status === 403){
+                setErrors((prev) => ({ ...prev, bad_data_error: "Incorrect email or password!" }));
+            }
+            else{
+                setErrors((prev) => ({ ...prev, bad_data_error: "Failed to sign in, please try again later" }));
+            }
+            
+            setSigningInInProgress(false);
+            console.error(error);
+        }
     }
+
+    
+
+    useEffect(() => {
+        if(isUserAuthenticated){
+            if(authenticatedUserType === userRolesENUM.PATIENT){
+                navigate("/patient/dashboard");
+            }
+            else if(authenticatedUserType === userRolesENUM.DIETITIAN){
+                navigate("/dietitian/dashboard");
+            }
+            else{
+                console.error("Unknown user type authenticated");
+            }
+        }
+    }, []);
 
     return (
         <div className={styles.main_container}>
@@ -114,7 +166,14 @@ export default function LoginForm() {
                 </div>
                 {errors.password_error && <p className={styles.error_message}>{errors.password_error}</p>}
 
+                {signingInInProgress && (
+                    <LoadingIndicator message="Checking credentials..." fontSize="1rem"/>
+                )}
+
                 <button type='submit' className={styles.form_submit_button} >Sign in</button>
+                {errors.bad_data_error && (
+                    <p className={styles.error_message}>{errors.bad_data_error}</p>
+                )}
             </form>
         </div>
     )

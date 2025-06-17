@@ -18,6 +18,7 @@
     align-items: center;
     height: auto;
     width: 60%;
+    padding: 0.5em;
 }
 
 .form_label {
@@ -54,7 +55,9 @@
 }
 
 .error_message {
+    margin-top: 0.3em;
     color: $Red;
+    font-size: 1.5rem;
 }
 
 .form_submit_button {

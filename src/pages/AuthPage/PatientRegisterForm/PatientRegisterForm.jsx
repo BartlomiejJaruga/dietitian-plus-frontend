@@ -1,13 +1,17 @@
 import styles from './PatientRegisterForm.module.scss';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { registerPatient } from "@slices/authSlice";
+import { useSelector } from 'react-redux';
+import { userRolesENUM } from '@enums';
+import LoadingIndicator from '@components/LoadingIndicator/LoadingIndicator';
+import axiosInstance from '@services/axiosInstance';
 
 export default function PatientRegisterForm() {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const isUserAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+    const authenticatedUserType = useSelector((state) => state.auth.userData.user_type);
+    const [registeringInProgress, setRegisteringInProgress] = useState(false);
 
     const [formData, setFormData] = useState({
         first_name: "",
@@ -21,6 +25,7 @@ export default function PatientRegisterForm() {
     const [errors, setErrors] = useState({
         email_error: "",
         password_error: "",
+        bad_data_error: "",
     });
 
     const handleFormInputChange = (e) => {
@@ -46,20 +51,55 @@ export default function PatientRegisterForm() {
         }
     } 
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
-        const { repeat_email, repeat_password, ...strippedFormData } = formData;
-        console.log(strippedFormData);
-
-        let userInfo = {
-            email: strippedFormData.email,
-            first_name: strippedFormData.first_name,
-            last_name: strippedFormData.last_name,
+        setRegisteringInProgress(true);
+        
+        const requestBody = {
+            email: formData.email,
+            password: formData.password,
+            role: userRolesENUM.PATIENT,
+            first_name: formData.first_name,
+            last_name: formData.last_name,
         }
 
-        dispatch(registerPatient(userInfo));
-        navigate("/patient/dashboard");
+        try {
+            const response = await axiosInstance.post('/v1/auth/register', requestBody);
+            
+            console.log(response);
+
+            // setErrors((prev) => ({ ...prev, bad_data_error: ""}));
+            // setRegisteringInProgress(false);
+            navigate("/auth?authType=login");
+        }
+        catch (error) {
+            if(error.response && error.response.status === 400){
+                setErrors((prev) => ({ ...prev, bad_data_error: error.response.data.message }));
+            }
+            else{
+                setErrors((prev) => ({ ...prev, bad_data_error: "Failed to register user, please try again later" }));
+            }
+            
+            setRegisteringInProgress(false);
+            console.error(error);
+        }
     }
+
+
+
+    useEffect(() => {
+        if(isUserAuthenticated){
+            if(authenticatedUserType === userRolesENUM.PATIENT){
+                navigate("/patient/dashboard");
+            }
+            else if(authenticatedUserType === userRolesENUM.DIETITIAN){
+                navigate("/dietitian/dashboard");
+            }
+            else{
+                console.error("Unknown user type authenticated");
+            }
+        }
+    }, []);
 
     return (
         <div className={styles.main_container}>
@@ -147,7 +187,15 @@ export default function PatientRegisterForm() {
 
                 {errors.password_error && <p className={styles.error_message}>{errors.password_error}</p>}
 
+                {registeringInProgress && (
+                    <div>
+                        <LoadingIndicator message="Checking credentials..." fontSize={"1rem"} />
+                    </div>
+                )}
                 <button type='submit' className={styles.form_submit_button} >Change your life</button>
+                {errors.bad_data_error && (
+                    <p className={styles.error_message}>{errors.bad_data_error}</p>
+                )}
             </form>
         </div>
     )
