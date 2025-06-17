@@ -1,11 +1,11 @@
-import styles from '@components/DietitianRegisterForm/DietitianRegisterForm.module.scss';
+import styles from './PatientRegisterForm.module.scss';
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { registerDietitian } from "@slices/authSlice";
+import { registerPatient } from "@slices/authSlice";
 
-export default function DietitianRegisterForm() {
+export default function PatientRegisterForm() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -16,7 +16,6 @@ export default function DietitianRegisterForm() {
         repeat_email: "",
         password: "",
         repeat_password: "",
-        phone_number: "",
     });
 
     const [errors, setErrors] = useState({
@@ -58,17 +57,17 @@ export default function DietitianRegisterForm() {
             last_name: strippedFormData.last_name,
         }
 
-        dispatch(registerDietitian(userInfo));
-        navigate("/dietitian/dashboard");
+        dispatch(registerPatient(userInfo));
+        navigate("/patient/dashboard");
     }
 
     return (
         <div className={styles.main_container}>
-            <form onSubmit={handleFormSubmit} className={styles.dietitian_register_form}>
+            <form onSubmit={handleFormSubmit} className={styles.patient_register_form}>
                 <div className={styles.input_container}>
-                    <label htmlFor="dietitian_register_form_first_name" className={styles.form_label}>Name:</label>
+                    <label htmlFor="patient_register_form_first_name" className={styles.form_label}>Name:</label>
                     <input name="first_name" 
-                            id="dietitian_register_form_first_name"
+                            id="patient_register_form_first_name"
                             className={styles.form_input}
                             value={formData.first_name} 
                             placeholder="Your Name" 
@@ -78,9 +77,9 @@ export default function DietitianRegisterForm() {
                 </div>
                 
                 <div className={styles.input_container}>
-                    <label htmlFor="dietitian_register_form_last_name" className={styles.form_label}>Surname:</label>
+                    <label htmlFor="patient_register_form_last_name" className={styles.form_label}>Surname:</label>
                     <input name="last_name"
-                            id="dietitian_register_form_last_name"
+                            id="patient_register_form_last_name"
                             className={styles.form_input}
                             value={formData.last_name}
                             placeholder="Your Surname"
@@ -90,10 +89,10 @@ export default function DietitianRegisterForm() {
                 </div>
 
                 <div className={styles.input_container}>
-                    <label htmlFor="dietitian_register_form_email" className={styles.form_label}>Email:</label>
+                    <label htmlFor="patient_register_form_email" className={styles.form_label}>Email:</label>
                     <input type="email" 
                             name="email" 
-                            id="dietitian_register_form_email"
+                            id="patient_register_form_email"
                             className={styles.form_input}
                             value={formData.email} 
                             placeholder="john.wiliams@gmail.com" 
@@ -104,10 +103,10 @@ export default function DietitianRegisterForm() {
                 </div>
 
                 <div className={styles.input_container}>
-                    <label htmlFor="dietitian_register_form_repeat_email" className={styles.form_label}>Repeat Email:</label>
+                    <label htmlFor="patient_register_form_repeat_email" className={styles.form_label}>Repeat Email:</label>
                     <input type="email" 
                             name="repeat_email" 
-                            id="dietitian_register_form_repeat_email"
+                            id="patient_register_form_repeat_email"
                             className={styles.form_input}
                             value={formData.repeat_email} 
                             placeholder="john.wiliams@gmail.com" 
@@ -120,10 +119,10 @@ export default function DietitianRegisterForm() {
                 {errors.email_error && <p className={styles.error_message}>{errors.email_error}</p>}
 
                 <div className={styles.input_container}>
-                    <label htmlFor="dietitian_register_form_password" className={styles.form_label}>Password:</label>
+                    <label htmlFor="patient_register_form_password" className={styles.form_label}>Password:</label>
                     <input type="password" 
                             name="password" 
-                            id="dietitian_register_form_password"
+                            id="patient_register_form_password"
                             className={styles.form_input}
                             value={formData.password} 
                             placeholder="Password" 
@@ -133,10 +132,10 @@ export default function DietitianRegisterForm() {
                 </div>
 
                 <div className={styles.input_container}>
-                    <label htmlFor="dietitian_register_form_repeat_password" className={styles.form_label}>Repeat Password:</label>
+                    <label htmlFor="patient_register_form_repeat_password" className={styles.form_label}>Repeat Password:</label>
                     <input type="password" 
                             name="repeat_password" 
-                            id="dietitian_register_form_repeat_password"
+                            id="patient_register_form_repeat_password"
                             className={styles.form_input}
                             value={formData.repeat_password} 
                             placeholder="Repeat Password" 
@@ -148,21 +147,7 @@ export default function DietitianRegisterForm() {
 
                 {errors.password_error && <p className={styles.error_message}>{errors.password_error}</p>}
 
-                <div className={styles.input_container}>
-                    <label htmlFor="dietitian_register_form_phone" className={styles.form_label}>Phone Number:</label>
-                    <input type='tel'
-                        name="phone_number" 
-                        id="dietitian_register_form_phone"
-                            className={styles.form_input}
-                        value={formData.phone_number} 
-                        placeholder="123456789" 
-                        pattern="\d{9}"
-                        onChange={handleFormInputChange} 
-                        autoComplete="off"
-                        required/>
-                </div>
-
-                <button type='submit' className={styles.form_submit_button} >Send register request</button>
+                <button type='submit' className={styles.form_submit_button} >Change your life</button>
             </form>
         </div>
     )

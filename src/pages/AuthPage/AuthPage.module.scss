@@ -12,6 +12,12 @@
     align-items: center;
 }
 
+.authpage_container_background {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 .register_dietitian_container {
     display: flex;
     justify-content: space-between;
@@ -87,4 +93,12 @@
     font-size: 2rem;
     @include apply-font($font-headings);
     margin-top: 1rem;
+}
+
+
+
+
+
+.login_container {
+    width: 30%;
 }

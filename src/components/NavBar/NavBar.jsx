@@ -12,7 +12,7 @@ export default function NavBar({ navBarColor="white", logoColor="green" }){
                 <img src={logoSrc} alt={`dietitian+_${logoColor}_logo`} className={styles.navbar_logo} />
             </Link>
             <Link to="/getStarted">Get Started</Link>
-            <Link to="/auth?authType=login_patient">Sign In</Link>
+            <Link to="/auth?authType=login">Sign In</Link>
             <Link to="/getStarted">Sign Up</Link>
             <Link to="/patient/questionnaire">Questionnaire</Link>
             <Link to="/dietitian/dashboard">Dietitian Dashboard</Link>
