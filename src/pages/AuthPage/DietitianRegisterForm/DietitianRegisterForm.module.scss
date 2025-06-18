@@ -1,6 +1,7 @@
 .main_container {
     width: 50%;
     height: 75%;
+    min-height: 65vh;
     background-color: $White;
     box-shadow: 0 0 0.8em 0.05em rgba(0,0,0, 0.25);
     display: flex;
@@ -9,7 +10,7 @@
     border-radius: 1em;
 }
 
-.patient_register_form {
+.dietitian_register_form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -53,6 +54,7 @@
 
 .error_message {
     color: $Red;
+    margin-top: 0.5em;
 }
 
 .form_submit_button {
@@ -65,7 +67,7 @@
     border-radius: 0.5rem;
     box-shadow: 0 0.3em 0.3em 0.05em rgba(0,0,0,0.25);
     padding: 0 1em;
-    margin-top: 2em;
+    margin-top: 3em;
     cursor: pointer;
     @include apply-font($font-headings);
     transition: 0.2s background-color ease;

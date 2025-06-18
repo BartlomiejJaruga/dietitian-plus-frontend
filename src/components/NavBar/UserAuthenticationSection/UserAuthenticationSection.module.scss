@@ -1,0 +1,51 @@
+.buttons_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.sign_up_button,
+.sign_in_button,
+.sign_out_button {
+    border: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+
+    padding: 0.5em 1.5em;
+
+    box-shadow: 0 0.25em 0.25em 0.05em rgba(0,0,0,0.25);
+    transition: background-color 0.2s ease;
+
+    font-size: 1.5rem;
+    font-weight: 500;
+    @include apply-font($font-headings);
+}
+
+.sign_in_button,
+.sign_out_button {
+    background-color: $Green;
+    color: $Text-White-Texts;
+    
+    &:hover {
+        background-color: $Green-Hover;
+    }
+}
+
+.sign_up_button--green {
+    background-color: $Dark-Green;
+    color: $Text-White-Texts;
+
+    &:hover {
+        background-color: $Dark-Green-Hover;
+    }
+}
+
+.sign_up_button--beige {
+    background-color: $Beige;
+    color: $Text-Black-Texts;
+
+    &:hover {
+        background-color: $Beige-Hover;
+    }
+}

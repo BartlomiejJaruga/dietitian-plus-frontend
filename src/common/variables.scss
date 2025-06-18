@@ -26,6 +26,7 @@ $font-general: (
 
 // ---- MAIN COLORS PALLETE ----
 $Dark-Green: #256F29;
+$Dark-Green-Hover: color.adjust($Dark-Green, $lightness: -10%);
 $Green: #4CAF50;
 $Green-Hover: color.adjust($Green, $lightness: -10%);
 $White: #ffffff;
@@ -34,6 +35,7 @@ $Black: #000000;
 $Lighter-Black: #2f2f2f;
 $Gray: #666666;
 $Beige: #F9CBA7;
+$Beige-Hover: color.adjust($Beige, $lightness: -15%);
 $Light-Blue: #00C8DF;
 $Yellow: #F3C333;
 $Red: #C81E18;

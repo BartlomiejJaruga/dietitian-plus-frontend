@@ -15,13 +15,6 @@ export const authSlice = createSlice({
     name: "auth",
     initialState: initialUserState,
     reducers: {
-        authenticateUser(state, action){
-            state.isAuthenticated = true;
-            state.userData.email = action.payload.email;
-            state.userData.first_name = action.payload.first_name;
-            state.userData.last_name = action.payload.last_name;
-            state.userData.user_type = action.payload.user_type;
-        },
         registerDietitian(state, action){
             state.isAuthenticated = true;
             state.userData.email = action.payload.email;
@@ -40,15 +33,26 @@ export const authSlice = createSlice({
             
             console.log({ ...state.userData });
         },
+        loginUser(state, action){
+            state.isAuthenticated = true;
+            state.userData.email = action.payload.email;
+            state.userData.first_name = action.payload.first_name;
+            state.userData.last_name = action.payload.last_name;
+            state.userData.user_type = action.payload.user_type;
+
+            console.log({ ...state.userData });
+        },
         logoutUser(state){
             state.isAuthenticated = false;
             state.userData.email = null;
             state.userData.first_name = null;
             state.userData.last_name = null;
             state.userData.user_type = userRolesENUM.GUEST;
+
+            console.log("user log out!");
         },
     },
 });
 
-export const { authenticateUser, registerDietitian, registerPatient, logoutUser } = authSlice.actions;
+export const { loginUser, registerDietitian, registerPatient, logoutUser } = authSlice.actions;
 export default authSlice.reducer;
