@@ -54,4 +54,65 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+
+    .questionnaire_link_container {
+        position: relative;
+        font-size: 1.5rem;
+
+        a, 
+        div {
+            font-size: inherit;
+        }
+
+        div {   // red dot for showing importance for user
+            position: absolute;
+            top: 0;
+            right: -0.5em;
+
+            height: 0.6em;
+            width: 0.6em;
+            border-radius: 50%;
+
+            background-color: $Red;
+
+            animation: pulsing 2.5s linear infinite;
+        }
+
+        @keyframes pulsing {
+            0% {
+                top: 0;
+                right: -0.5em;
+                width: 0.6em;
+                height: 0.6em;
+            }
+            10% {
+                top: -0.10em;
+                right: -0.6em;
+                width: 0.75em;
+                height: 0.75em;
+            }
+            20% {
+                top: 0;
+                right: -0.5em;
+                width: 0.6em;
+                height: 0.6em;
+            }
+            30% {
+                top: -0.10em;
+                right: -0.6em;
+                width: 0.75em;
+                height: 0.75em;
+            }
+            40% {
+                top: 0;
+                right: -0.5em;
+                width: 0.6em;
+                height: 0.6em;
+            }
+            100% {
+                width: 0.6em;
+                height: 0.6em;
+            }
+        }
+    }
 }
