@@ -24,7 +24,9 @@ export default function UserAuthenticationSection({ navBarColor }) {
         sessionStorage.removeItem("Bearer_token");
         localStorage.removeItem("Refresh_token");
         
-        navigate('/');
+        setTimeout(() => {
+            navigate('/auth?authType=login');
+        }, 0);
     }
 
 
