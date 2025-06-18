@@ -23,6 +23,7 @@ export default function DietitianDashboardPage(){
             <div className={styles.dietitian_dashboard_page_container}>
                 <h1>Dietitian Dashboard Page</h1>
                 <span>{`Hello ${user.first_name} ${user.last_name} (${user.email})!`}</span>
+                <p>{`UUID: ${user.uuid}`}</p>
             </div>
         </>
         

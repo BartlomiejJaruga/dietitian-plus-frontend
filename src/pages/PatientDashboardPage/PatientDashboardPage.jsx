@@ -23,6 +23,7 @@ export default function PatientDashboardPage(){
             <div className={styles.patient_dashboard_page_container}>
                 <h1>Patient Dashboard Page</h1>
                 <span>{`Hello ${user.first_name} ${user.last_name} (${user.email})!`}</span>
+                <p>{`UUID: ${user.uuid}`}</p>
             </div>
         </>
     )

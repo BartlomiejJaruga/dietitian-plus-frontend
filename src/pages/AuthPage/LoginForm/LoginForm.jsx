@@ -86,6 +86,7 @@ export default function LoginForm() {
                 first_name: response.data.first_name,
                 last_name: response.data.last_name,
                 user_type: response.data.role,
+                uuid: response.data.user_id,
             }
 
             // setErrors((prev) => ({ ...prev, bad_data_error: "" }));
