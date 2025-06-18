@@ -35,6 +35,7 @@ $Black: #000000;
 $Lighter-Black: #2f2f2f;
 $Gray: #666666;
 $Beige: #F9CBA7;
+$Beige-Hover: color.adjust($Beige, $lightness: -15%);
 $Light-Blue: #00C8DF;
 $Yellow: #F3C333;
 $Red: #C81E18;

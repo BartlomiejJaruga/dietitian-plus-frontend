@@ -67,8 +67,6 @@ export default function DietitianRegisterForm() {
 
         try {
             const response = await axiosInstance.post('/v1/auth/register', requestBody);
-            
-            console.log(response);
 
             // setErrors((prev) => ({ ...prev, bad_data_error: ""}));
             // setRegisteringInProgress(false);

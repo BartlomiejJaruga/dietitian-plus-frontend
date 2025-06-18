@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "@slices/authSlice";
 
-export default function UserAuthenticationSection() {
+export default function UserAuthenticationSection({ navBarColor }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const isUserAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-
+    const signUpbuttonStyles = `${styles.sign_up_button} ${(navBarColor === "white") ? styles[`sign_up_button--green`] : styles['sign_up_button--beige']}`;
 
     const handleSignUpButtonClick = () => {
         navigate('/getStarted');
@@ -20,19 +20,22 @@ export default function UserAuthenticationSection() {
 
     const handleSignOutButtonClick = () => {
         dispatch(logoutUser());
-
+        
         sessionStorage.removeItem("Bearer_token");
         localStorage.removeItem("Refresh_token");
-
-        navigate('/auth?authType=login');
+        
+        navigate('/');
     }
 
+
+
+    
     return (
         <div className={styles.main_container}>
             {!isUserAuthenticated && (
                 <div className={styles.buttons_container}>
                     <button 
-                        className={styles.sign_up_button} 
+                        className={signUpbuttonStyles} 
                         onClick={handleSignUpButtonClick}
                     >
                         Sign up
