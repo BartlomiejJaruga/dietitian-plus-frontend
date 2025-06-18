@@ -1,6 +1,7 @@
 import styles from "./NavBar.module.scss"
 
 import { Link } from "react-router-dom";
+import UserAuthenticationSection from "./UserAuthenticationSection/UserAuthenticationSection";
 
 export default function NavBar({ navBarColor="white", logoColor="green" }){
     const containerStylesClass = `${styles.navbar_container} ${styles[`navbar_container--${navBarColor}`] || 'navbar_container--white'}`;
@@ -20,6 +21,7 @@ export default function NavBar({ navBarColor="white", logoColor="green" }){
             <Link to="/dietitian/patients">Dietitian Patients</Link>
             <Link to="/patient/dashboard">Patient Dashboard</Link>
             <Link to="/patient/aboutMe">Patient About Me</Link>
+            <UserAuthenticationSection />
         </div>
     );
 }

@@ -26,6 +26,7 @@ $font-general: (
 
 // ---- MAIN COLORS PALLETE ----
 $Dark-Green: #256F29;
+$Dark-Green-Hover: color.adjust($Dark-Green, $lightness: -10%);
 $Green: #4CAF50;
 $Green-Hover: color.adjust($Green, $lightness: -10%);
 $White: #ffffff;
