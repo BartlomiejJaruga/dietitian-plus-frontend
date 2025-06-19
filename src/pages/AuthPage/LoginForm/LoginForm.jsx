@@ -4,6 +4,7 @@ import { useState, useId, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from "@slices/authSlice";
+import { setIsQuestionnaireCompleted } from '@slices/patientSlice';
 import { userRolesENUM } from '@enums';
 import axiosInstance from '@services/axiosInstance';
 import LoadingIndicator from '@components/LoadingIndicator/LoadingIndicator';
@@ -94,13 +95,21 @@ export default function LoginForm() {
             dispatch(loginUser(userInfo));
 
             if(userInfo.user_type === userRolesENUM.PATIENT){
-                navigate("/patient/dashboard");
+                const isQuestionnaireCompleted = await checkIfPatientQuestionnaireIsCompleted(userInfo.uuid);
+
+                if(isQuestionnaireCompleted){
+                    navigate("/patient/dashboard");
+                }
+                else{
+                    navigate("/patient/questionnaire");
+                }
             }
             else if(userInfo.user_type === userRolesENUM.DIETITIAN){
                 navigate("/dietitian/dashboard");
             }
             else{
                 console.error("Unknown user type passed by server");
+                setSigningInInProgress(false);
             }
         }
         catch(error){
@@ -114,7 +123,31 @@ export default function LoginForm() {
             setSigningInInProgress(false);
             console.error(error);
         }
-    }
+    }   
+
+    const checkIfPatientQuestionnaireIsCompleted = async (userId) => {
+        try{
+            const response = await axiosInstance.get(`/v1/patients/${userId}/questionnaire-status`);
+            
+            dispatch(setIsQuestionnaireCompleted({ isQuestionnaireCompleted: response.data.is_questionnaire_completed}));
+            return response.data.is_questionnaire_completed;
+        }
+        catch(error){
+            if(error.response && error.response.status === 403){
+                setErrors((prev) => ({ ...prev, bad_data_error: "Failed to authenticate with JWT, please try again later" }));
+            }
+            else if(error.response && error.response.status === 404){
+                setErrors((prev) => ({ ...prev, bad_data_error: "Patient not found" }));
+            }
+            else{
+                setErrors((prev) => ({ ...prev, bad_data_error: "Failed to check if patient completed questionnaire" }));
+            }
+
+            setSigningInInProgress(false);
+            console.error(error);
+        }
+    } 
+
 
     
 
