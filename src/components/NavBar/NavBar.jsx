@@ -9,6 +9,9 @@ export default function NavBar({ navBarColor="white", logoColor="green" }){
     const containerStylesClass = `${styles.navbar_container} ${styles[`navbar_container--${navBarColor}`] || 'navbar_container--white'}`;
     const logoSrc = `/logo_${logoColor}.png`;
     const userType = useSelector((state) => state.auth.userData.user_type);
+    const isPatientQuestionnaireCompleted = useSelector(
+        (state) => state.patient.isQuestionnaireCompleted
+    );
 
     return (
         <div className={containerStylesClass}>
@@ -35,7 +38,12 @@ export default function NavBar({ navBarColor="white", logoColor="green" }){
 
             {userType === userRolesENUM.PATIENT && (
                 <div className={styles.links_container}>
-                    <Link to="/patient/questionnaire">Questionnaire</Link>
+                    {!isPatientQuestionnaireCompleted && (
+                        <div className={styles.questionnaire_link_container}>
+                            <Link to="/patient/questionnaire">Questionnaire</Link>
+                            <div/>
+                        </div>
+                    )}
                     <Link to="/patient/dashboard">Dashboard</Link>
                     <Link to="/patient/aboutMe">About Me</Link>
                 </div>

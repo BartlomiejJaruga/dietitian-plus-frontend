@@ -1,8 +1,6 @@
 import styles from "./PatientQuestionnairePage.module.scss";
 import React, { useState } from "react";
 
-import NavBar from "@components/NavBar/NavBar";
-
 import WelcomePage from "./steps/WelcomePage";
 import BasicInformation from "./steps/BasicInformation";
 import AllergiesAndDislikeProducts from "./steps/AllergiesAndDislikedProducts";
@@ -16,8 +14,14 @@ const FormStep = {
 };
 
 export default function PatientQuestionnairePage() {
-
     const [currentStep, setCurrentStep] = useState(FormStep.WelcomePage);
+    const [questionnaireData, setQuestionnaireData] = useState({
+        birthData: "",
+        gender: "",
+        height: "",
+        weight: "",
+        pal: "",
+    });
 
     const goNext = () => {
         setCurrentStep((prev) => Math.min(prev + 1, FormStep.Agreement));
@@ -32,11 +36,23 @@ export default function PatientQuestionnairePage() {
         case FormStep.WelcomePage:
             return <WelcomePage onNext={goNext} />;
         case FormStep.BasicInformation:
-            return <BasicInformation onNext={goNext} onBack={goBack} />;
+            return (
+                <BasicInformation 
+                    onNext={goNext} 
+                    onBack={goBack} 
+                    questionnaireData={questionnaireData}
+                    setQuestionnaireData={setQuestionnaireData}
+                />
+            );
         case FormStep.AllergiesAndDislikeProducts:
             return <AllergiesAndDislikeProducts onNext={goNext} onBack={goBack} />;
         case FormStep.Agreement:
-            return <Agreement onBack={goBack} onNext={goBack} />;
+            return (
+                <Agreement 
+                    onBack={goBack}
+                    questionnaireData={questionnaireData}
+                />
+            );
         default:
             return null;
         }

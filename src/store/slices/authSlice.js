@@ -18,6 +18,7 @@ export const authSlice = createSlice({
     reducers: {
         loginUser(state, action){
             state.isAuthenticated = true;
+            
             state.userData.email = action.payload.email;
             state.userData.first_name = action.payload.first_name;
             state.userData.last_name = action.payload.last_name;
