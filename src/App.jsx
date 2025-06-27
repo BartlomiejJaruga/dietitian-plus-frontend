@@ -14,9 +14,34 @@ import PatientQuestionnairePage from '@pages/PatientQuestionnairePage/PatientQue
 import PatientAboutMePage from '@pages/PatientAboutMePage/PatientAboutMePage'
 import DietitianDishesPage from '@pages/DietitianDishesPage/DietitianDishesPage'
 import DietitianPatientsPage from '@pages/DietitianPatientsPage/DietitianPatientsPage'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { sessionSavedSettingsDataENUM } from '@enums'
+import { loginUser, setAuthIsGettingLoaded } from '@slices/authSlice'
+import { setIsQuestionnaireCompleted } from '@slices/patientSlice'
 
 function App() {
+    const dispatch = useDispatch();
 
+
+    useEffect(() => {
+        const storedSessionUserData = sessionStorage.getItem(sessionSavedSettingsDataENUM.USER_DATA);
+        
+        if(storedSessionUserData){
+            dispatch(loginUser(JSON.parse(storedSessionUserData)));
+        }
+        else{
+            dispatch(setAuthIsGettingLoaded(false));
+        }
+
+        const storedIsQuestionnaireCompleted = sessionStorage.getItem(
+            sessionSavedSettingsDataENUM.IS_PATIENT_QUESTIONNAIRE_COMPLETED
+        );
+
+        if(storedIsQuestionnaireCompleted){
+            dispatch(setIsQuestionnaireCompleted(JSON.parse(storedIsQuestionnaireCompleted)));
+        }
+    }, [dispatch]);
 
     return (
         <>

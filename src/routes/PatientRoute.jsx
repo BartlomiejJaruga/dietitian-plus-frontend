@@ -3,15 +3,20 @@ import { useSelector } from "react-redux";
 import { userRolesENUM } from "@enums";
 
 export default function PatientRoute() {
-  const authState = useSelector((state) => state.auth);
+	const authState = useSelector((state) => state.auth);
 
-  if (!authState 
-      || authState.isAuthenticated !== true 
-      || authState.userData.user_type !== userRolesENUM.PATIENT
-    ) {
-    return <Navigate to="/unauthorized" replace />;
-  }
+	if(authState.isAuthGettingLoaded){
+		return null;
+	}
 
-  return <Outlet />;
+	if (
+		!authState 
+		|| authState.isAuthenticated !== true 
+		|| authState.userData.user_type !== userRolesENUM.PATIENT
+	) {
+		return <Navigate to="/unauthorized" replace />;
+	}
+
+	return <Outlet />;
 };
 
