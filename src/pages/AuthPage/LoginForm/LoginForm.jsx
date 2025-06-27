@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from "@slices/authSlice";
 import { setIsQuestionnaireCompleted } from '@slices/patientSlice';
-import { userRolesENUM } from '@enums';
+import { tokenNamesENUM, userRolesENUM } from '@enums';
 import axiosInstance from '@services/axiosInstance';
 import LoadingIndicator from '@components/LoadingIndicator/LoadingIndicator';
 
@@ -79,8 +79,8 @@ export default function LoginForm() {
         try{
             const response = await axiosInstance.post('/v1/auth/authenticate', requestBody);
 
-            sessionStorage.setItem("Bearer_token", response.data.access_token)
-            localStorage.setItem("Refresh_token", response.data.refresh_token)
+            sessionStorage.setItem(tokenNamesENUM.ACCESS_TOKEN_NAME, response.data.access_token)
+            sessionStorage.setItem(tokenNamesENUM.REFRESH_TOKEN_NAME, response.data.refresh_token)
 
             const userInfo = {
                 email: requestBody.email,

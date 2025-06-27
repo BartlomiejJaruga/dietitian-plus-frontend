@@ -29,7 +29,7 @@ const Agreement = ({ onBack, questionnaireData }) => {
 			starting_weight: questionnaireData.weight,
 			pal: palFormat,
 			birthdate: questionnaireData.birthDate,
-			// gender: questionnaireData.gender,
+			gender: questionnaireData.gender,
 		}
 
 		try{

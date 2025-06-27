@@ -3,6 +3,7 @@ import styles from "./UserAuthenticationSection.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "@slices/authSlice";
+import { tokenNamesENUM } from "@enums";
 
 export default function UserAuthenticationSection({ navBarColor }) {
     const navigate = useNavigate();
@@ -21,8 +22,8 @@ export default function UserAuthenticationSection({ navBarColor }) {
     const handleSignOutButtonClick = () => {
         dispatch(logoutUser());
         
-        sessionStorage.removeItem("Bearer_token");
-        localStorage.removeItem("Refresh_token");
+        sessionStorage.removeItem(tokenNamesENUM.ACCESS_TOKEN_NAME);
+        sessionStorage.removeItem(tokenNamesENUM.REFRESH_TOKEN_NAME);
         
         setTimeout(() => {
             navigate('/auth?authType=login');
