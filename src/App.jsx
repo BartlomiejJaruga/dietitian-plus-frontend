@@ -23,8 +23,7 @@ import { setIsQuestionnaireCompleted } from '@slices/patientSlice'
 function App() {
     const dispatch = useDispatch();
 
-
-    useEffect(() => {
+    const tryToLoadUserData = () => {
         const storedSessionUserData = sessionStorage.getItem(sessionSavedSettingsDataENUM.USER_DATA);
         
         if(storedSessionUserData){
@@ -33,7 +32,9 @@ function App() {
         else{
             dispatch(setAuthIsGettingLoaded(false));
         }
+    }
 
+    const tryToLoadIsQuestionnaireCompleted = () => {
         const storedIsQuestionnaireCompleted = sessionStorage.getItem(
             sessionSavedSettingsDataENUM.IS_PATIENT_QUESTIONNAIRE_COMPLETED
         );
@@ -41,6 +42,11 @@ function App() {
         if(storedIsQuestionnaireCompleted){
             dispatch(setIsQuestionnaireCompleted(JSON.parse(storedIsQuestionnaireCompleted)));
         }
+    }
+
+    useEffect(() => {
+        tryToLoadUserData();
+        tryToLoadIsQuestionnaireCompleted();
     }, [dispatch]);
 
     return (
