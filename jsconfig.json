@@ -6,6 +6,7 @@
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
       "@slices/*": ["src/store/slices/*"],
+      "@middlewares/*": ["src/store/middleware/*"],
       "@icons/*": ["src/assets/icons/*"],
       "@images/*": ["src/assets/images/*"],
       "@services/*": ["src/services/*"],

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { userRolesENUM } from "@enums";
 
 const initialUserState = {
+    isAuthGettingLoaded: true,
     isAuthenticated: false,
     userData: {
         email: null,
@@ -25,6 +26,8 @@ export const authSlice = createSlice({
             state.userData.user_type = action.payload.user_type;
             state.userData.uuid = action.payload.uuid;
 
+            state.isAuthGettingLoaded = false;
+
             console.log({ ...state.userData });
         },
         logoutUser(state){
@@ -38,8 +41,17 @@ export const authSlice = createSlice({
 
             console.log("user log out!");
         },
+        setAuthIsGettingLoaded(state, action){
+            state.isAuthGettingLoaded = action.payload.isAuthGettingLoaded;
+        }
     },
 });
 
-export const { loginUser, registerDietitian, registerPatient, logoutUser } = authSlice.actions;
+export const { 
+    loginUser, 
+    registerDietitian, 
+    registerPatient, 
+    logoutUser, 
+    setAuthIsGettingLoaded 
+} = authSlice.actions;
 export default authSlice.reducer;
