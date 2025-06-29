@@ -2,6 +2,7 @@ import LoadingIndicator from "@components/LoadingIndicator/LoadingIndicator";
 import styles from "./DietitianDishesPage.module.scss";
 
 import NavBar from "@components/NavBar/NavBar";
+import ProductSearchBar from "@components/ProductSearchBar/ProductSearchBar";
 import { useEffect, useState } from "react";
 import axiosInstance from "@services/axiosInstance";
 
@@ -43,6 +44,13 @@ export default function DietitianDishesPage() {
                 {!isPageBeingLoaded && (
                     <>
                         <h1>Dietitian Dishes Page</h1>
+                        <ProductSearchBar 
+                            productsData={products} 
+                            fontSize="1rem"
+                            onProductSelect={(selectedProductId) => {
+                                console.log(selectedProductId);
+                            }}
+                        />
                     </>
                 )}
                 
