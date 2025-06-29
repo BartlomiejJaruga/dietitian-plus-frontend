@@ -5,6 +5,7 @@ import NavBar from "@components/NavBar/NavBar";
 import ProductSearchBar from "@components/ProductSearchBar/ProductSearchBar";
 import { useEffect, useState } from "react";
 import axiosInstance from "@services/axiosInstance";
+import DishCreationMenu from "./DishCreationMenu/DishCreationMenu";
 
 export default function DietitianDishesPage() {
     const [products, setProducts] = useState([]);
@@ -43,14 +44,15 @@ export default function DietitianDishesPage() {
 
                 {!isPageBeingLoaded && (
                     <>
-                        <h1>Dietitian Dishes Page</h1>
-                        <ProductSearchBar 
+                        <DishCreationMenu productsData={products}/>
+                        
+                        {/* <ProductSearchBar 
                             productsData={products} 
                             fontSize="1rem"
                             onProductSelect={(selectedProductId) => {
                                 console.log(selectedProductId);
                             }}
-                        />
+                        /> */}
                     </>
                 )}
                 
