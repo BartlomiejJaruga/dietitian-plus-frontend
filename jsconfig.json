@@ -11,6 +11,7 @@
       "@images/*": ["src/assets/images/*"],
       "@services/*": ["src/services/*"],
       "@routes/*": ["src/routes/*"],
+      "@hooks/*": ["src/hooks/*"],
     }
   },
   "exclude": ["node_modules", "dist"]

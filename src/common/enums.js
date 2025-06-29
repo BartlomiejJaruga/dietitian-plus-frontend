@@ -12,4 +12,5 @@ export const tokenNamesENUM = Object.freeze({
 export const sessionSavedSettingsDataENUM = Object.freeze({
     USER_DATA: "user_data",
     IS_PATIENT_QUESTIONNAIRE_COMPLETED: "is_patient_questionnaire_completed",
+    UNITS_DATA: "units_data",
 });
