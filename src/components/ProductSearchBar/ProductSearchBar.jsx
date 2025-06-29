@@ -130,7 +130,7 @@ export default function ProductSearchBar({ productsData, fontSize, onProductSele
                             </li>
                         ))
                     ) : (
-                        <li className={styles.dropdown_no_results}>Brak wyników</li>
+                        <li className={styles.dropdown_no_results}>No results</li>
                     )}
                 </ul>
             )}
