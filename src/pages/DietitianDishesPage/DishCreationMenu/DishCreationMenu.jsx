@@ -5,8 +5,23 @@ import ProductSearchBar from '@components/ProductSearchBar/ProductSearchBar';
 
 
 export default function DishCreationMenu({ productsData }){
+    const [dishName, setDishName] = useState("");
     const [dishProductsRows, setDishProductsRows] = useState(0);
     const [dishProducts, setDishProducts] = useState([]);
+    const [dishRecipe, setDishRecipe] = useState("");
+
+    const handleDishSave = () => {
+        console.log("DishName: ", dishName);
+        console.log("DishProducts: ", dishProducts);
+        console.log("DishRecipe: ", dishRecipe);
+    }
+
+    const handleDishDiscard = () => {
+        setDishName("");
+        setDishProducts([]);
+        setDishProductsRows(0);
+        setDishRecipe("");
+    }
 
     return (
         <>
@@ -18,7 +33,9 @@ export default function DishCreationMenu({ productsData }){
                     <input
                         type="text"
                         name="dishName"
-                        placeholder="Enter your dish name here" 
+                        value={dishName}
+                        placeholder="Enter your dish name here"
+                        onChange={(e) => setDishName(e.target.value)}
                         className={styles.dish_name}
                     />
                     <div className={styles.products_list_container}>
@@ -49,7 +66,6 @@ export default function DishCreationMenu({ productsData }){
                         {dishProductsRows - dishProducts.length > 0 && (
                             Array.from({ length: dishProductsRows }).map((_) => (
                                 <>  
-                                    {console.log(productsData)}
                                     <ProductSearchBar 
                                         productsData={productsData} 
                                         fontSize="1em" 
@@ -94,12 +110,14 @@ export default function DishCreationMenu({ productsData }){
                     </div>
                     <textarea
                         className={styles.recipe}
+                        value={dishRecipe}
+                        onChange={(e) => setDishRecipe(e.target.value)}
                         placeholder="Enter your recipe here"
                     />
                 </div>
                 <div className={styles.below_container}>
-                    <button>Discard</button>
-                    <button>Save</button>
+                    <button onClick={handleDishDiscard}>Discard</button>
+                    <button onClick={handleDishSave}>Save</button>
                 </div>
             </div>
         </>

@@ -11,7 +11,7 @@
         border: 0.2em solid $White;
         border-radius: 0.5em;
         
-        box-shadow: 0.1em 0.1em 0.3em rgba(0,0,0, 0.25) inset;
+        box-shadow: 0.1em 0.1em 0.6em rgba(0,0,0, 0.25) inset;
         font-size: inherit;
     }
 
@@ -23,7 +23,7 @@
         
         background: $White;
         border-radius: 0.5em;
-        box-shadow: 0 0.1em 0.5em rgba(0,0,0, 0.15);
+        box-shadow: 0 0.1em 0.6em rgba(0,0,0, 0.5);
         
         max-height: 300%;
         overflow-y: auto;
