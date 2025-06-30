@@ -6,6 +6,7 @@
     gap: 1.5em;
 
     width: 45%;
+    min-width: 45rem;
     height: auto;
 
     .above_container {
@@ -57,16 +58,37 @@
 
             display: grid;
             grid-template-columns: 3fr 1fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 1em 0;
+            gap: 1em 0.25em;
             place-items: center;
+
+            .product_amount_input {
+                box-sizing: border-box;
+
+                width: auto;
+                max-width: 5em;
+                padding: 1.25em 0.75em;
+
+                background-color: $White;
+                box-shadow: 0.1em 0.1em 0.5em 0.1em rgba(0,0,0, 0.25) inset;
+            }
+            
+            .product_unit_select {
+                box-sizing: border-box;
+
+                border-radius: 0.5em;
+                border: 0;
+                
+                padding: 0.9em 0.75em;
+
+                background-color: $White;
+                box-shadow: 0.1em 0.1em 0.5em 0.1em rgba(0,0,0, 0.25) inset;
+            }
 
             button {
                 width: 1.25em;
                 height: 1.25em;
 
                 border: 0;
-                border-radius: 50%;
-                background-color: $Green;
 
                 transition: background-color 0.2s ease;
                 cursor: pointer;
@@ -75,6 +97,22 @@
 
                 color: $Text-White-Texts;
                 font-size: 1.75em;
+            }
+
+            .remove_row_button {
+                border-radius: 0.25em;
+                background-color: $Red;
+
+                font-size: 1.5em;
+            
+                &:hover {
+                    background-color: $Red-Hover;
+                }
+            }
+
+            .add_new_row_button {
+                border-radius: 50%;
+                background-color: $Green;
 
                 &:hover {
                     background-color: $Green-Hover;

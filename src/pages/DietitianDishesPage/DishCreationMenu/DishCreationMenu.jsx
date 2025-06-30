@@ -112,7 +112,7 @@ export default function DishCreationMenu({ productsData }) {
 
                 <div className={styles.products_list_container}>
                     <span>Product Name</span>
-                    <span>Value</span>
+                    <span>Amount</span>
                     <span>Unit</span>
                     <span>Kcal</span>
                     <span>P</span>
@@ -135,11 +135,13 @@ export default function DishCreationMenu({ productsData }) {
                                 value={row.amount}
                                 min="0"
                                 step="0.1"
+                                className={styles.product_amount_input}
                                 onChange={(e) => handleAmountChange(row.id, parseFloat(e.target.value))}
                             />
 
                             <select
                                 value={row.unit.unit_id}
+                                className={styles.product_unit_select}
                                 onChange={(e) => handleUnitChange(row.id, parseInt(e.target.value))}
                             >
                                 {units.map((unit) => (
@@ -154,11 +156,21 @@ export default function DishCreationMenu({ productsData }) {
                             <span>{row.nutrition_values.carbs}</span>
                             <span>{row.nutrition_values.fats}</span>
                             <span>{row.nutrition_values.fiber}</span>
-                            <button onClick={() => removeRow(row.id)}>-</button>
+                            <button 
+                                className={styles.remove_row_button}
+                                onClick={() => removeRow(row.id)}
+                            >
+                                -
+                            </button>
                         </React.Fragment>
                     ))}
 
-                    <button onClick={addNewRow}>+</button>
+                    <button 
+                        className={styles.add_new_row_button}
+                        onClick={addNewRow}
+                    >
+                        +
+                    </button>
                 </div>
 
                 <div className={styles.total_nutritions_container}>
