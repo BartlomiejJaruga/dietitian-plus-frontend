@@ -22,7 +22,8 @@ export default function DishCreationMenu({ productsData }) {
                 amount: 1,
                 unit: defaultUnit,
                 nutrition_values: {
-                    kcal: 0, protein: 0, carbs: 0, fats: 0, fiber: 0
+                    kcal: 0, protein: 0, carbs: 0, fats: 0, fiber: 0,
+                    glycemic_index: 0, glycemic_load: 0, cho: 0, pfe: 0
                 }
             }
         ]);
@@ -33,7 +34,7 @@ export default function DishCreationMenu({ productsData }) {
         if (!selectedProduct) return;
 
         setDishProductRows(prev => {
-            const newRows = prev.map(row => 
+            const newRows = prev.map(row =>
                 row.id === rowId ? { ...row, product: selectedProduct } : row
             );
             return recalculateNutrition(newRows, rowId);
@@ -68,12 +69,26 @@ export default function DishCreationMenu({ productsData }) {
         const factor = grams / 100;
 
         const base = row.product.nutrition_values;
+        const gi = +(base.glycemic_index * factor).toFixed(2);
+        const carbs = +(base.carbs * factor).toFixed(2);
+        const fiber = +(base.fiber * factor).toFixed(2);
+        const protein = +(base.protein * factor).toFixed(2);
+        const fats = +(base.fats * factor).toFixed(2);
+
+        const cho = +(carbs - fiber).toFixed(2);
+        const gl = +((gi * cho) / 100).toFixed(2);
+        const pfe = +((protein * 4 + carbs * 4 + fats * 9) / 100).toFixed(2);
+
         rows[index].nutrition_values = {
             kcal: +(base.kcal * factor).toFixed(2),
-            protein: +(base.protein * factor).toFixed(2),
-            carbs: +(base.carbs * factor).toFixed(2),
-            fats: +(base.fats * factor).toFixed(2),
-            fiber: +(base.fiber * factor).toFixed(2),
+            protein,
+            carbs,
+            fats,
+            fiber,
+            glycemic_index: gi,
+            glycemic_load: gl,
+            cho,
+            pfe
         };
 
         return [...rows];
@@ -94,6 +109,23 @@ export default function DishCreationMenu({ productsData }) {
         setDishRecipe("");
         setDishProductRows([]);
     };
+
+    const totalNutrition = dishProductRows.reduce((totals, row) => {
+        const n = row.nutrition_values;
+        totals.kcal += n.kcal || 0;
+        totals.protein += n.protein || 0;
+        totals.carbs += n.carbs || 0;
+        totals.fats += n.fats || 0;
+        totals.fiber += n.fiber || 0;
+        totals.glycemic_index += n.glycemic_index || 0;
+        totals.glycemic_load += n.glycemic_load || 0;
+        totals.cho += n.cho || 0;
+        totals.pfe += n.pfe || 0;
+        return totals;
+    }, {
+        kcal: 0, protein: 0, carbs: 0, fats: 0, fiber: 0,
+        glycemic_index: 0, glycemic_load: 0, cho: 0, pfe: 0
+    });
 
     return (
         <div className={styles.main_container}>
@@ -156,7 +188,7 @@ export default function DishCreationMenu({ productsData }) {
                             <span>{row.nutrition_values.carbs}</span>
                             <span>{row.nutrition_values.fats}</span>
                             <span>{row.nutrition_values.fiber}</span>
-                            <button 
+                            <button
                                 className={styles.remove_row_button}
                                 onClick={() => removeRow(row.id)}
                             >
@@ -165,7 +197,7 @@ export default function DishCreationMenu({ productsData }) {
                         </React.Fragment>
                     ))}
 
-                    <button 
+                    <button
                         className={styles.add_new_row_button}
                         onClick={addNewRow}
                     >
@@ -174,18 +206,42 @@ export default function DishCreationMenu({ productsData }) {
                 </div>
 
                 <div className={styles.total_nutritions_container}>
-                    <span>P:</span><span>0</span>
-                    <span>C:</span><span>0</span>
-                    <span>F:</span><span>0</span>
-                    <span>Fib:</span><span>0</span>
-                    <span>GL:</span><span>0</span>
-                    <span>GI:</span><span>0</span>
-                    <span>CHO:</span><span>0</span>
-                    <span>PFE:</span><span>0</span>
+                    <div>
+                        <span>P:</span>
+                        <span>{totalNutrition.protein.toFixed(2)}</span>
+                    </div>
+                    <div>
+                        <span>C:</span>
+                        <span>{totalNutrition.carbs.toFixed(2)}</span>
+                    </div>
+                    <div>
+                        <span>F:</span>
+                        <span>{totalNutrition.fats.toFixed(2)}</span>
+                    </div>
+                    <div>
+                        <span>Fib:</span>
+                        <span>{totalNutrition.fiber.toFixed(2)}</span>
+                    </div>
+                    <div>
+                        <span>GL:</span>
+                        <span>{totalNutrition.glycemic_load.toFixed(2)}</span>
+                    </div>
+                    <div>
+                        <span>GI:</span>
+                        <span>{totalNutrition.glycemic_index.toFixed(2)}</span>
+                    </div>
+                    <div>
+                        <span>CHO:</span>
+                        <span>{totalNutrition.cho.toFixed(2)}</span>
+                    </div>
+                    <div>
+                        <span>PFE:</span>
+                        <span>{totalNutrition.pfe.toFixed(2)}</span>
+                    </div>
                 </div>
 
                 <div className={styles.total_kcal_container}>
-                    <span>Kcal:</span><span>0.00</span>
+                    <span>Kcal:</span><span>{totalNutrition.kcal.toFixed(2)}</span>
                 </div>
 
                 <textarea
