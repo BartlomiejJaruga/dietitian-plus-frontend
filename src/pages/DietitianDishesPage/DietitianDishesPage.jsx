@@ -2,10 +2,10 @@ import LoadingIndicator from "@components/LoadingIndicator/LoadingIndicator";
 import styles from "./DietitianDishesPage.module.scss";
 
 import NavBar from "@components/NavBar/NavBar";
-import ProductSearchBar from "@components/ProductSearchBar/ProductSearchBar";
 import { useEffect, useState } from "react";
 import axiosInstance from "@services/axiosInstance";
 import DishCreationMenu from "./DishCreationMenu/DishCreationMenu";
+import YourDishesMenu from "./YourDishesMenu/YourDishesMenu";
 
 export default function DietitianDishesPage() {
     const [products, setProducts] = useState([]);
@@ -45,14 +45,7 @@ export default function DietitianDishesPage() {
                 {!isPageBeingLoaded && (
                     <>
                         <DishCreationMenu productsData={products}/>
-                        
-                        {/* <ProductSearchBar 
-                            productsData={products} 
-                            fontSize="1rem"
-                            onProductSelect={(selectedProductId) => {
-                                console.log(selectedProductId);
-                            }}
-                        /> */}
+                        <YourDishesMenu />
                     </>
                 )}
                 
