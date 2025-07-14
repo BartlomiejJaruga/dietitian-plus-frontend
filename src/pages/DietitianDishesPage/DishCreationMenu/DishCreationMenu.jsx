@@ -1,5 +1,5 @@
 import styles from './DishCreationMenu.module.scss';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductSearchBar from '@components/ProductSearchBar/ProductSearchBar';
 import { useSelector } from 'react-redux';
 
@@ -10,6 +10,18 @@ export default function DishCreationMenu({ productsData }) {
     const [dishName, setDishName] = useState("");
     const [dishRecipe, setDishRecipe] = useState("");
     const [dishProductRows, setDishProductRows] = useState([]);
+    const [dishErrors, setDishErrors] = useState({
+        nameError: null,
+        productsQuantityError: null,
+        productNotChosenError: null,
+    });
+    const [hasTriedToSave, setHasTriedToSave] = useState(false);
+
+    useEffect(() => {
+        if(hasTriedToSave) {
+            isDishDataCorrect();
+        }
+    }, [dishName, dishProductRows]);
 
     const defaultUnit = units.find(u => u.unit_name === "Gram") || units[0];
 
@@ -98,7 +110,46 @@ export default function DishCreationMenu({ productsData }) {
         setDishProductRows(prev => prev.filter(row => row.id !== rowId));
     };
 
+    const isDishDataCorrect = () => {
+        let isDishDataCorrect = true;
+
+        if(dishName === ""){
+            setDishErrors((prev) => ({ ...prev, nameError: "Field is required" }));
+            isDishDataCorrect = false;
+        }
+        else{
+            setDishErrors((prev) => ({ ...prev, nameError: null }));
+        }
+
+        if(dishProductRows.length < 1){
+            setDishErrors((prev) => ({
+                ...prev, 
+                productsQuantityError: "At least 1 product is required" 
+            }));
+            isDishDataCorrect = false;
+        }
+        else{
+            setDishErrors((prev) => ({ ...prev, productsQuantityError: null }));
+        }
+
+        if(dishProductRows.length > 0 && dishProductRows.some(productRow => productRow.product === null)){
+            setDishErrors((prev) => ({
+                ...prev, 
+                productNotChosenError: "All products need to be selected" 
+            }));
+            isDishDataCorrect = false;
+        }
+        else{
+            setDishErrors((prev) => ({ ...prev, productNotChosenError: null }));
+        }
+
+        return isDishDataCorrect;
+    }
+
     const handleDishSave = () => {
+        setHasTriedToSave(true);
+        if(!isDishDataCorrect()) return;
+
         console.log("DishName:", dishName);
         console.log("DishProducts:", dishProductRows);
         console.log("DishRecipe:", dishRecipe);
@@ -139,10 +190,17 @@ export default function DishCreationMenu({ productsData }) {
                     value={dishName}
                     placeholder="Enter your dish name here"
                     onChange={(e) => setDishName(e.target.value)}
-                    className={styles.dish_name}
+                    className={`${styles.dish_name} ${dishErrors.nameError ? styles["dish_name--error"] : ""}`}
                 />
+                {dishErrors.nameError && (
+                    <p className={styles.error_message}>{dishErrors.nameError}</p>
+                )}
 
-                <div className={styles.products_list_container}>
+                <div className={`${styles.products_list_container} ${
+                    (dishErrors.productsQuantityError || dishErrors.productNotChosenError)
+                    ? styles["products_list_container--error"] 
+                    : ""
+                }`}>
                     <span>Product Name</span>
                     <span>Amount</span>
                     <span>Unit</span>
@@ -199,11 +257,19 @@ export default function DishCreationMenu({ productsData }) {
 
                     <button
                         className={styles.add_new_row_button}
-                        onClick={addNewRow}
+                        onClick={() => {
+                            addNewRow();
+                        }}
                     >
                         +
                     </button>
                 </div>
+                {dishErrors.productsQuantityError && (
+                    <p className={styles.error_message}>{dishErrors.productsQuantityError}</p>
+                )}
+                {dishErrors.productNotChosenError && (
+                    <p className={styles.error_message}>{dishErrors.productNotChosenError}</p>
+                )}
 
                 <div className={styles.total_nutritions_container}>
                     <div>
