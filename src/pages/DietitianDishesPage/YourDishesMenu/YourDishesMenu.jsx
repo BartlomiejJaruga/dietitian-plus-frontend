@@ -3,6 +3,7 @@ import styles from './YourDishesMenu.module.scss';
 import axiosInstance from '@services/axiosInstance';
 import { useSelector } from 'react-redux';
 import LoadingIndicator from '@components/LoadingIndicator/LoadingIndicator';
+import DishTile from './DishTile/DishTile';
 
 export default function YourDishesMenu(){
     const dietitianId = useSelector((state) => state.auth.userData.uuid);
@@ -14,7 +15,7 @@ export default function YourDishesMenu(){
             const response = await axiosInstance.get(`/v1/dietitians/${dietitianId}/dishes`);
             
             setDishes(response.data);
-            console.log(response);
+            console.log(response.data);
         }
         catch(error){
             console.log(error);
@@ -46,12 +47,14 @@ export default function YourDishesMenu(){
 
                 {!isPageBeingLoaded && (
                     <>
-                        <div className={styles.dishes_list_container}>
-                            {dishes.length > 0 && dishes.map((dish, index) => {
+                        <div className={`${styles.dishes_list_container} ${
+                            dishes.length > 0
+                            ? styles["dishes_list_container--grid"] 
+                            : styles["dishes_list_container--flex"]
+                        }`}>
+                            {dishes.length > 0 && dishes.map((dish) => {
                                 return (
-                                    <div>
-                                        Dish {index}
-                                    </div>
+                                    <DishTile key={dish.dish_id} dishData={dish} allDishes={dishes} setDishes={setDishes} />
                                 );
                             })}
 

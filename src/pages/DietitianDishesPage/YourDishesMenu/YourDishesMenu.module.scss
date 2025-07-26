@@ -7,8 +7,6 @@
     justify-content: flex-start;
     gap: 1.5em;
 
-    // border: 1px solid $Red;
-
     .above_container {
         align-self: flex-start;
 
@@ -25,6 +23,25 @@
 
     .dishes_list_container {
         width: 100%;
-        // border: 1px solid $Green;
+
+        &--grid {
+            display: grid;
+            gap: 5vh 5%;
+            grid-template-columns: 1fr;
+
+            @include respond(xxl){
+                grid-template-columns: 1fr 1fr;
+            }
+
+            @include respond(ultra){
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        &--flex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     }
 }

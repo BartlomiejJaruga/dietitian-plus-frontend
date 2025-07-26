@@ -1,12 +1,13 @@
 import styles from './DishCreationMenu.module.scss';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ProductSearchBar from '@components/ProductSearchBar/ProductSearchBar';
 import { useSelector } from 'react-redux';
-
-let rowIdCounter = 0;
+import axiosInstance from '@services/axiosInstance';
 
 export default function DishCreationMenu({ productsData }) {
+    const dietitianId = useSelector((state) => state.auth.userData.uuid);
     const units = useSelector((state) => state.units.unitsData);
+    const rowIdCounterRef = useRef(0);
     const [dishName, setDishName] = useState("");
     const [dishRecipe, setDishRecipe] = useState("");
     const [dishProductRows, setDishProductRows] = useState([]);
@@ -29,7 +30,7 @@ export default function DishCreationMenu({ productsData }) {
         setDishProductRows(prev => [
             ...prev,
             {
-                id: rowIdCounter++,
+                id: rowIdCounterRef.current++,
                 product: null,
                 amount: 1,
                 unit: defaultUnit,
@@ -146,13 +147,35 @@ export default function DishCreationMenu({ productsData }) {
         return isDishDataCorrect;
     }
 
-    const handleDishSave = () => {
+    const mapProductDataForNewDish = (products) => {
+        return products.map((product) => {
+            return {
+                product_id: product.product.product_id,
+                unit_id: product.unit.unit_id,
+                unit_count: product.amount,
+            }
+        });
+    }
+
+    const handleDishSave = async () => {
         setHasTriedToSave(true);
         if(!isDishDataCorrect()) return;
 
-        console.log("DishName:", dishName);
-        console.log("DishProducts:", dishProductRows);
-        console.log("DishRecipe:", dishRecipe);
+        try {
+            const requestBody = {
+                dish_name: dishName.trim(),
+                recipe: dishRecipe.trim(),
+                dietitian_id: dietitianId,
+                products: mapProductDataForNewDish(dishProductRows),
+            }
+            console.log(requestBody);
+            const response = await axiosInstance.post('/v1/dishes', requestBody);
+
+            console.log(response);
+        }
+        catch(error){
+            console.error(error);
+        }
     };
 
     const handleDishDiscard = () => {
