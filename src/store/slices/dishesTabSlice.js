@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialDishesTabState = {
     currentlyEditedDish: null,
+    hasDishesChanged: false,
 };
 
 export const dishesTabSlice = createSlice({
@@ -15,13 +16,17 @@ export const dishesTabSlice = createSlice({
         },
         clearCurrentlyEditedDish(state){
             state.currentlyEditedDish = null;
+        },
+        setHasDishesChanged(state, action){
+            state.hasDishesChanged = action.payload.hasDishesChanged;
         }
     },
 });
 
 export const { 
     setCurrentlyEditedDish,
-    clearCurrentlyEditedDish
+    clearCurrentlyEditedDish,
+    setHasDishesChanged
 } = dishesTabSlice.actions;
 
 export default dishesTabSlice.reducer;

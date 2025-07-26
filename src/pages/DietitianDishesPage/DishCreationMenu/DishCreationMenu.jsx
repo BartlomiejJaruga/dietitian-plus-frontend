@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import ProductSearchBar from '@components/ProductSearchBar/ProductSearchBar';
 import { useDispatch, useSelector } from 'react-redux';
 import axiosInstance from '@services/axiosInstance';
-import { clearCurrentlyEditedDish } from '@slices/dishesTabSlice';
+import { clearCurrentlyEditedDish, setHasDishesChanged } from '@slices/dishesTabSlice';
 
 export default function DishCreationMenu({ productsData }) {
     const dispatch = useDispatch();
@@ -219,6 +219,8 @@ export default function DishCreationMenu({ productsData }) {
             console.log(response);
             clearDishFields();
             setHasTriedToSave(false);
+
+            dispatch(setHasDishesChanged({ hasDishesChanged: true }));
         }
         catch(error){
             console.error(error);
@@ -240,6 +242,8 @@ export default function DishCreationMenu({ productsData }) {
             clearDishFields();
             dispatch(clearCurrentlyEditedDish());
             setHasTriedToSave(false);
+
+            dispatch(setHasDishesChanged({ hasDishesChanged: true }));
         }
         catch(error){
             console.error(error);
@@ -313,7 +317,7 @@ export default function DishCreationMenu({ productsData }) {
                             <ProductSearchBar
                                 key={row.id}
                                 productsData={productsData}
-                                defaultProductId={row.product.product_id}
+                                defaultProductId={row.product?.product_id ?? null}
                                 fontSize="1em"
                                 onProductSelect={(productId) => handleProductSelect(row.id, productId)}
                             />

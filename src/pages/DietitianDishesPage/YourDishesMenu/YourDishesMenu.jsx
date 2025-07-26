@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import styles from './YourDishesMenu.module.scss';
 import axiosInstance from '@services/axiosInstance';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import LoadingIndicator from '@components/LoadingIndicator/LoadingIndicator';
 import DishTile from './DishTile/DishTile';
+import { setHasDishesChanged } from '@slices/dishesTabSlice';
 
 export default function YourDishesMenu(){
+    const dispatch = useDispatch();
     const dietitianId = useSelector((state) => state.auth.userData.uuid);
+    const hasDishesChanged = useSelector((state) => state.dishesTab.hasDishesChanged);
     const [isPageBeingLoaded, setIsPageBeingLoaded] = useState(true);
     const [dishes, setDishes] = useState([]);
 
@@ -23,7 +26,7 @@ export default function YourDishesMenu(){
     }
 
     useEffect(() => {
-        const loadData = async () => {
+        const loadInitialData = async () => {
             setIsPageBeingLoaded(true);
 
             fetchDishes();
@@ -31,8 +34,23 @@ export default function YourDishesMenu(){
             setIsPageBeingLoaded(false);
         }
         
-        loadData();
+        loadInitialData();
     }, []);
+
+    useEffect(() => {
+        if (!hasDishesChanged) return;
+
+        const reloadData = async () => {
+            setIsPageBeingLoaded(true);
+
+            fetchDishes();
+            dispatch(setHasDishesChanged({ hasDishesChanged: false }));
+
+            setIsPageBeingLoaded(false);
+        };
+
+        reloadData();
+    }, [hasDishesChanged]);
 
     return (
         <>

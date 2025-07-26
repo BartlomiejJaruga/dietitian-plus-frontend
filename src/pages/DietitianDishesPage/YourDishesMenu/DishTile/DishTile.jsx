@@ -3,13 +3,19 @@ import styles from './DishTile.module.scss';
 import axiosInstance from '@services/axiosInstance';
 import Trashcan from '@icons/trashcan.svg?react';
 import Pencil from '@icons/pencil.svg?react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentlyEditedDish } from '@slices/dishesTabSlice';
 
 export default function DishTile({ dishData, allDishes, setDishes }){
     const dispatch = useDispatch();
+    const currentlyEditedDish = useSelector((state) => state.dishesTab.currentlyEditedDish);
 
     const handleDelete = async (dishId) => {
+        if(currentlyEditedDish && dishId === currentlyEditedDish.dish.dish_id){
+            console.log("Can't delete dish that is being edited!");
+            return;
+        }
+
         try{
             await axiosInstance.delete(`/v1/dishes/${dishId}`);
 
@@ -21,6 +27,8 @@ export default function DishTile({ dishData, allDishes, setDishes }){
     }
 
     const handleEdit = async (dishId) => {
+        if(currentlyEditedDish && dishId === currentlyEditedDish.dish.dish_id) return;
+
         try {
             const response = await axiosInstance.get(`/v1/dishes/${dishId}/products`);
 
