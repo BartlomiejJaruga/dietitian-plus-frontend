@@ -1,7 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from './ProductSearchBar.module.scss';
 
-export default function ProductSearchBar({ productsData, fontSize, onProductSelect }) {
+export default function ProductSearchBar({
+    productsData, 
+    fontSize, 
+    onProductSelect, 
+    defaultProductId
+}) {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -89,6 +94,16 @@ export default function ProductSearchBar({ productsData, fontSize, onProductSele
             });
         }
     }, [highlightedIndex]);
+
+    useEffect(() => {
+        if (!defaultProductId || !productsData || productsData.length === 0) return;
+
+        const foundProduct = productsData.find(p => p.product_id === defaultProductId);
+        if (foundProduct) {
+            setSearchTerm(foundProduct.product_name);
+            onProductSelect?.(foundProduct.product_id);
+        }
+    }, []);
 
     useEffect(() => {
         const handleClickOutside = (event) => {

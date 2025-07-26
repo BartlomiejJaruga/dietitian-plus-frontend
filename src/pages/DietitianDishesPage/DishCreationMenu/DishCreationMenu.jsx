@@ -1,12 +1,16 @@
 import styles from './DishCreationMenu.module.scss';
 import React, { useEffect, useState, useRef } from 'react';
 import ProductSearchBar from '@components/ProductSearchBar/ProductSearchBar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axiosInstance from '@services/axiosInstance';
+import { clearCurrentlyEditedDish } from '@slices/dishesTabSlice';
 
 export default function DishCreationMenu({ productsData }) {
+    const dispatch = useDispatch();
     const dietitianId = useSelector((state) => state.auth.userData.uuid);
     const units = useSelector((state) => state.units.unitsData);
+    const currentlyEditedDish = useSelector((state) => state.dishesTab.currentlyEditedDish);
+    const [isDishEdited, setIsDishEdited] = useState(false);
     const rowIdCounterRef = useRef(0);
     const [dishName, setDishName] = useState("");
     const [dishRecipe, setDishRecipe] = useState("");
@@ -23,6 +27,38 @@ export default function DishCreationMenu({ productsData }) {
             isDishDataCorrect();
         }
     }, [dishName, dishProductRows]);
+
+    useEffect(() => {
+        if(currentlyEditedDish !== null){
+            handleNewDishToEdit();
+        }
+    }, [currentlyEditedDish]);
+
+    const handleNewDishToEdit = () => {
+        const dish = currentlyEditedDish.dish;
+        const products = currentlyEditedDish.products;
+
+        setDishName(dish.dish_name);
+        setDishRecipe(dish.recipe);
+
+        let tempRows = products.map((productObj) => ({
+            id: rowIdCounterRef.current++,
+            product: productObj.product,
+            amount: productObj.unit_count,
+            unit: productObj.unit,
+            nutrition_values: {
+                kcal: 0, protein: 0, carbs: 0, fats: 0, fiber: 0,
+                glycemic_index: 0, glycemic_load: 0, cho: 0, pfe: 0
+            }
+        }));
+
+        for (let i = 0; i < tempRows.length; i++) {
+            tempRows = recalculateNutrition(tempRows, tempRows[i].id);
+        }
+
+        setDishProductRows(tempRows);
+        setIsDishEdited(true);
+    };
 
     const defaultUnit = units.find(u => u.unit_name === "Gram") || units[0];
 
@@ -161,6 +197,15 @@ export default function DishCreationMenu({ productsData }) {
         setHasTriedToSave(true);
         if(!isDishDataCorrect()) return;
 
+        if(isDishEdited){
+            handleEditedDishSave(currentlyEditedDish.dish.dish_id);
+        }
+        else{
+            handleNewDishSave();
+        }
+    };
+
+    const handleNewDishSave = async () => {
         try {
             const requestBody = {
                 dish_name: dishName.trim(),
@@ -168,20 +213,49 @@ export default function DishCreationMenu({ productsData }) {
                 dietitian_id: dietitianId,
                 products: mapProductDataForNewDish(dishProductRows),
             }
-            console.log(requestBody);
+            
             const response = await axiosInstance.post('/v1/dishes', requestBody);
 
             console.log(response);
+            clearDishFields();
+            setHasTriedToSave(false);
         }
         catch(error){
             console.error(error);
         }
-    };
+    }
 
-    const handleDishDiscard = () => {
+    const handleEditedDishSave = async (dishId) => {
+        try {
+            const requestBody = {
+                dish_name: dishName.trim(),
+                recipe: dishRecipe.trim(),
+                products: mapProductDataForNewDish(dishProductRows),
+            }
+            console.log("[PATCH] requestBody:", requestBody);
+            const response = await axiosInstance.patch(`/v1/dishes/${dishId}`, requestBody);
+
+            console.log("[PATCH] response:", response);
+            setIsDishEdited(false);
+            clearDishFields();
+            dispatch(clearCurrentlyEditedDish());
+            setHasTriedToSave(false);
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
+
+    const clearDishFields = () => {
         setDishName("");
         setDishRecipe("");
         setDishProductRows([]);
+    }
+
+    const handleDishDiscard = () => {
+        clearDishFields();
+        setIsDishEdited(false);
+        dispatch(clearCurrentlyEditedDish());
     };
 
     const totalNutrition = dishProductRows.reduce((totals, row) => {
@@ -239,6 +313,7 @@ export default function DishCreationMenu({ productsData }) {
                             <ProductSearchBar
                                 key={row.id}
                                 productsData={productsData}
+                                defaultProductId={row.product.product_id}
                                 fontSize="1em"
                                 onProductSelect={(productId) => handleProductSelect(row.id, productId)}
                             />
