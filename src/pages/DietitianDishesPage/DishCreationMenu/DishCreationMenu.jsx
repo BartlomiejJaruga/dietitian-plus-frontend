@@ -44,7 +44,7 @@ export default function DishCreationMenu({ productsData }) {
         const products = currentlyEditedDish.products;
 
         setDishName(dish.dish_name);
-        setDishRecipe(dish.recipe);
+        setDishRecipe(dish.recipe || "");
 
         let tempRows = products.map((productObj) => ({
             id: rowIdCounterRef.current++,
@@ -365,6 +365,7 @@ export default function DishCreationMenu({ productsData }) {
 
                                 <input
                                     type="number"
+                                    name="productAmount"
                                     value={row.amount}
                                     min="0"
                                     step="0.1"
@@ -373,6 +374,7 @@ export default function DishCreationMenu({ productsData }) {
                                 />
 
                                 <select
+                                    name="productUnitType"
                                     value={row.unit.unit_id}
                                     className={styles.product_unit_select}
                                     onChange={(e) => handleUnitChange(row.id, parseInt(e.target.value))}
@@ -455,6 +457,7 @@ export default function DishCreationMenu({ productsData }) {
 
                     <textarea
                         className={styles.recipe}
+                        name="dishRecipe"
                         value={dishRecipe}
                         onChange={(e) => setDishRecipe(e.target.value)}
                         placeholder="Enter your recipe here"

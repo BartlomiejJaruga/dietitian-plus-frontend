@@ -11,8 +11,6 @@ export const dishesTabSlice = createSlice({
     reducers: {
         setCurrentlyEditedDish(state, action){
             state.currentlyEditedDish = action.payload.dishData;
-
-            console.log('[DishesTab SLICE] setCurrentlyEditedDish:', { ...state.currentlyEditedDish });
         },
         clearCurrentlyEditedDish(state){
             state.currentlyEditedDish = null;

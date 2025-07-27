@@ -124,6 +124,7 @@ export default function ProductSearchBar({
             <input
                 ref={inputRef}
                 type="text"
+                name="productName"
                 value={searchTerm}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}

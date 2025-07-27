@@ -61,8 +61,6 @@ export default function DishTile({ dishData, allDishes, setDishes }){
         try {
             const response = await axiosInstance.get(`/v1/dishes/${dishId}/products`);
 
-            console.log(response);
-
             const dishToEditData = {
                 dishData: response.data,
             }
