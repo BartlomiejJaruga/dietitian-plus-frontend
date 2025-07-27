@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import axiosInstance from "@services/axiosInstance";
 import DishCreationMenu from "./DishCreationMenu/DishCreationMenu";
 import YourDishesMenu from "./YourDishesMenu/YourDishesMenu";
+import { useToastNotification } from "@hooks/useToastNotification";
 
 export default function DietitianDishesPage() {
+    const toastNotification = useToastNotification();
     const [products, setProducts] = useState([]);
     const [isPageBeingLoaded, setIsPageBeingLoaded] = useState(true);
 
@@ -19,6 +21,10 @@ export default function DietitianDishesPage() {
         }
         catch(error){
             console.error("Error while loading products: ", error);
+            toastNotification(
+                "Failed to load products from database.",
+                toastNotificationTypesENUM.ERROR
+            );
         }
     }
 

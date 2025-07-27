@@ -5,23 +5,35 @@ import { useDispatch, useSelector } from 'react-redux';
 import LoadingIndicator from '@components/LoadingIndicator/LoadingIndicator';
 import DishTile from './DishTile/DishTile';
 import { setHasDishesChanged } from '@slices/dishesTabSlice';
+import { useToastNotification } from '@hooks/useToastNotification';
 
 export default function YourDishesMenu(){
+    const toastNotification = useToastNotification();
     const dispatch = useDispatch();
     const dietitianId = useSelector((state) => state.auth.userData.uuid);
     const hasDishesChanged = useSelector((state) => state.dishesTab.hasDishesChanged);
     const [isPageBeingLoaded, setIsPageBeingLoaded] = useState(true);
     const [dishes, setDishes] = useState([]);
 
+    const sortDishesAlfabetically = (dishes) => {
+        return [...dishes].sort((a, b) =>
+            a.dish_name.toLowerCase().localeCompare(b.dish_name.toLowerCase())
+        );
+    }
+
     const fetchDishes = async () => {
         try {
             const response = await axiosInstance.get(`/v1/dietitians/${dietitianId}/dishes`);
             
-            setDishes(response.data);
-            console.log(response.data);
+            const sortedData = sortDishesAlfabetically(response.data);
+            setDishes(sortedData);
         }
         catch(error){
             console.log(error);
+            toastNotification(
+                "Failed to load your dishes.",
+                toastNotificationTypesENUM.ERROR
+            );
         }
     }
 

@@ -19,9 +19,8 @@ export default function DishTile({ dishData, allDishes, setDishes }){
     const handleDelete = async (dishId) => {
         if(currentlyEditedDish && dishId === currentlyEditedDish.dish.dish_id){
             toastNotification(
-                "Can't delete dish that is currently being edited!",
-                toastNotificationTypesENUM.ERROR,
-                3
+                "Can't delete dish that is currently being edited.",
+                toastNotificationTypesENUM.ERROR
             );
             return;
         }
@@ -34,9 +33,18 @@ export default function DishTile({ dishData, allDishes, setDishes }){
             await axiosInstance.delete(`/v1/dishes/${dishId}`);
 
             setDishes(allDishes.filter(dish => dish.dish_id !== dishData.dish_id));
+
+            toastNotification(
+                "Dish successfully deleted.",
+                toastNotificationTypesENUM.SUCCESS
+            );
         }
         catch(error){
             console.error(error);
+            toastNotification(
+                "Failed to delete dish.",
+                toastNotificationTypesENUM.ERROR
+            );
         }
         finally{
             setShowDeleteModal(false);
@@ -63,6 +71,10 @@ export default function DishTile({ dishData, allDishes, setDishes }){
         }
         catch(error){
             console.error(error);
+            toastNotification(
+                "Failed to load dish data to edit.",
+                toastNotificationTypesENUM.ERROR
+            );
         }
     }
 

@@ -5,8 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import axiosInstance from '@services/axiosInstance';
 import { clearCurrentlyEditedDish, setHasDishesChanged } from '@slices/dishesTabSlice';
 import ConfirmationModal from '@components/ConfirmationModal/ConfirmationModal';
+import { useToastNotification } from '@hooks/useToastNotification';
+import { toastNotificationTypesENUM } from '@enums';
 
 export default function DishCreationMenu({ productsData }) {
+    const toastNotification = useToastNotification();
     const dispatch = useDispatch();
     const dietitianId = useSelector((state) => state.auth.userData.uuid);
     const units = useSelector((state) => state.units.unitsData);
@@ -216,16 +219,24 @@ export default function DishCreationMenu({ productsData }) {
                 products: mapProductDataForNewDish(dishProductRows),
             }
             
-            const response = await axiosInstance.post('/v1/dishes', requestBody);
+            await axiosInstance.post('/v1/dishes', requestBody);
 
-            console.log(response);
             clearDishFields();
             setHasTriedToSave(false);
 
             dispatch(setHasDishesChanged({ hasDishesChanged: true }));
+
+            toastNotification(
+                "Dish added successfully.",
+                toastNotificationTypesENUM.SUCCESS
+            );
         }
         catch(error){
             console.error(error);
+            toastNotification(
+                "Failed to save new dish.",
+                toastNotificationTypesENUM.ERROR
+            );
         }
     }
 
@@ -236,19 +247,27 @@ export default function DishCreationMenu({ productsData }) {
                 recipe: dishRecipe.trim() || null,
                 products: mapProductDataForNewDish(dishProductRows),
             }
-            console.log("[PATCH] requestBody:", requestBody);
-            const response = await axiosInstance.patch(`/v1/dishes/${dishId}`, requestBody);
 
-            console.log("[PATCH] response:", response);
+            await axiosInstance.patch(`/v1/dishes/${dishId}`, requestBody);
+
             setIsDishEdited(false);
             clearDishFields();
             dispatch(clearCurrentlyEditedDish());
             setHasTriedToSave(false);
 
             dispatch(setHasDishesChanged({ hasDishesChanged: true }));
+
+            toastNotification(
+                "Dish edited successfully.",
+                toastNotificationTypesENUM.SUCCESS
+            );
         }
         catch(error){
             console.error(error);
+            toastNotification(
+                "Failed to edit existing dish.",
+                toastNotificationTypesENUM.ERROR
+            );
         }
     }
 
@@ -272,7 +291,13 @@ export default function DishCreationMenu({ productsData }) {
     }
 
     const handleDishDiscard = () => {
-        if(dishName === "" && dishRecipe === "" && dishProductRows.length < 1) return;
+        if(dishName === "" && dishRecipe === "" && dishProductRows.length < 1){
+            toastNotification(
+                "Nothing to discard.",
+                toastNotificationTypesENUM.INFO
+            );
+            return;
+        }
 
         setShowDiscardModal(true);
     };
