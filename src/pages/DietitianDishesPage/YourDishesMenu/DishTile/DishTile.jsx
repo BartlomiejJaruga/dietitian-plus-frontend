@@ -7,15 +7,22 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentlyEditedDish } from '@slices/dishesTabSlice';
 import ConfirmationModal from '@components/ConfirmationModal/ConfirmationModal';
+import { useToastNotification } from '@hooks/useToastNotification';
+import { toastNotificationTypesENUM } from '@enums';
 
 export default function DishTile({ dishData, allDishes, setDishes }){
+    const toastNotification = useToastNotification();
     const dispatch = useDispatch();
     const currentlyEditedDish = useSelector((state) => state.dishesTab.currentlyEditedDish);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const handleDelete = async (dishId) => {
         if(currentlyEditedDish && dishId === currentlyEditedDish.dish.dish_id){
-            console.log("Can't delete dish that is currently being edited!");
+            toastNotification(
+                "Can't delete dish that is currently being edited!",
+                toastNotificationTypesENUM.ERROR,
+                3
+            );
             return;
         }
 
