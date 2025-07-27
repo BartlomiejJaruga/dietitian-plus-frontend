@@ -6,7 +6,7 @@ export default function ToastNotificationProvider({ children }) {
     const [toasts, setToasts] = useState([]);
     const idCounter = useRef(0);
 
-    const addToast = useCallback((message, type = "info", duration = 3) => {
+    const addToast = useCallback((message = "default message", type = "info", duration = 5) => {
         const id = `toast-${idCounter.current++}`;
         setToasts((prev) => [{ id, message, type, duration }, ...prev]);
 
