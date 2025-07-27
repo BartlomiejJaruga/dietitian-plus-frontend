@@ -3,19 +3,26 @@ import styles from './DishTile.module.scss';
 import axiosInstance from '@services/axiosInstance';
 import Trashcan from '@icons/trashcan.svg?react';
 import Pencil from '@icons/pencil.svg?react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentlyEditedDish } from '@slices/dishesTabSlice';
+import ConfirmationModal from '@components/ConfirmationModal/ConfirmationModal';
 
 export default function DishTile({ dishData, allDishes, setDishes }){
     const dispatch = useDispatch();
     const currentlyEditedDish = useSelector((state) => state.dishesTab.currentlyEditedDish);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const handleDelete = async (dishId) => {
         if(currentlyEditedDish && dishId === currentlyEditedDish.dish.dish_id){
-            console.log("Can't delete dish that is being edited!");
+            console.log("Can't delete dish that is currently being edited!");
             return;
         }
 
+        setShowDeleteModal(true);
+    }
+
+    const handleConfirmDelete = async (dishId) => {
         try{
             await axiosInstance.delete(`/v1/dishes/${dishId}`);
 
@@ -24,6 +31,13 @@ export default function DishTile({ dishData, allDishes, setDishes }){
         catch(error){
             console.error(error);
         }
+        finally{
+            setShowDeleteModal(false);
+        }
+    }
+
+    const handleCancelDelete = () => {
+        setShowDeleteModal(false);
     }
 
     const handleEdit = async (dishId) => {
@@ -88,6 +102,14 @@ export default function DishTile({ dishData, allDishes, setDishes }){
                     </div>
                 </div>
             </div>
+
+            <ConfirmationModal 
+                isOpen={showDeleteModal} 
+                message={`Do you want to delete ${dishData.dish_name} ?`}
+                messageToHighlight={`${dishData.dish_name}`}
+                onConfirm={() => { handleConfirmDelete(dishData.dish_id) }}
+                onCancel={handleCancelDelete}
+            />
         </>
     )
 }

@@ -4,6 +4,7 @@ import ProductSearchBar from '@components/ProductSearchBar/ProductSearchBar';
 import { useDispatch, useSelector } from 'react-redux';
 import axiosInstance from '@services/axiosInstance';
 import { clearCurrentlyEditedDish, setHasDishesChanged } from '@slices/dishesTabSlice';
+import ConfirmationModal from '@components/ConfirmationModal/ConfirmationModal';
 
 export default function DishCreationMenu({ productsData }) {
     const dispatch = useDispatch();
@@ -21,6 +22,7 @@ export default function DishCreationMenu({ productsData }) {
         productNotChosenError: null,
     });
     const [hasTriedToSave, setHasTriedToSave] = useState(false);
+    const [showDiscardModal, setShowDiscardModal] = useState(false);
 
     useEffect(() => {
         if(hasTriedToSave) {
@@ -256,10 +258,23 @@ export default function DishCreationMenu({ productsData }) {
         setDishProductRows([]);
     }
 
-    const handleDishDiscard = () => {
+    const handleConfirmDiscard = () => {
         clearDishFields();
+
         setIsDishEdited(false);
         dispatch(clearCurrentlyEditedDish());
+
+        setShowDiscardModal(false);
+    }
+
+    const handleCancelDiscard = () => {
+        setShowDiscardModal(false);
+    }
+
+    const handleDishDiscard = () => {
+        if(dishName === "" && dishRecipe === "" && dishProductRows.length < 1) return;
+
+        setShowDiscardModal(true);
     };
 
     const totalNutrition = dishProductRows.reduce((totals, row) => {
@@ -280,150 +295,159 @@ export default function DishCreationMenu({ productsData }) {
     });
 
     return (
-        <div className={styles.main_container}>
-            <div className={styles.above_container}>
-                <div>Dish creation menu</div>
-            </div>
-            <div className={styles.dish_creation_menu_container}>
-                <input
-                    type="text"
-                    name="dishName"
-                    value={dishName}
-                    placeholder="Enter your dish name here"
-                    onChange={(e) => setDishName(e.target.value)}
-                    className={`${styles.dish_name} ${dishErrors.nameError ? styles["dish_name--error"] : ""}`}
-                />
-                {dishErrors.nameError && (
-                    <p className={styles.error_message}>{dishErrors.nameError}</p>
-                )}
-
-                <div className={`${styles.products_list_container} ${
-                    (dishErrors.productsQuantityError || dishErrors.productNotChosenError)
-                    ? styles["products_list_container--error"] 
-                    : ""
-                }`}>
-                    <span>Product Name</span>
-                    <span>Amount</span>
-                    <span>Unit</span>
-                    <span>Kcal</span>
-                    <span>P</span>
-                    <span>C</span>
-                    <span>F</span>
-                    <span>Fib</span>
-                    <span></span>
-
-                    {dishProductRows.map((row) => (
-                        <React.Fragment key={row.id}>
-                            <ProductSearchBar
-                                key={row.id}
-                                productsData={productsData}
-                                defaultProductId={row.product?.product_id ?? null}
-                                fontSize="1em"
-                                onProductSelect={(productId) => handleProductSelect(row.id, productId)}
-                            />
-
-                            <input
-                                type="number"
-                                value={row.amount}
-                                min="0"
-                                step="0.1"
-                                className={styles.product_amount_input}
-                                onChange={(e) => handleAmountChange(row.id, parseFloat(e.target.value))}
-                            />
-
-                            <select
-                                value={row.unit.unit_id}
-                                className={styles.product_unit_select}
-                                onChange={(e) => handleUnitChange(row.id, parseInt(e.target.value))}
-                            >
-                                {units.map((unit) => (
-                                    <option key={unit.unit_id} value={unit.unit_id}>
-                                        {unit.unit_name}
-                                    </option>
-                                ))}
-                            </select>
-
-                            <span>{row.nutrition_values.kcal}</span>
-                            <span>{row.nutrition_values.protein}</span>
-                            <span>{row.nutrition_values.carbs}</span>
-                            <span>{row.nutrition_values.fats}</span>
-                            <span>{row.nutrition_values.fiber}</span>
-                            <button
-                                className={styles.remove_row_button}
-                                onClick={() => removeRow(row.id)}
-                            >
-                                -
-                            </button>
-                        </React.Fragment>
-                    ))}
-
-                    <button
-                        className={styles.add_new_row_button}
-                        onClick={() => {
-                            addNewRow();
-                        }}
-                    >
-                        +
-                    </button>
+        <>
+            <div className={styles.main_container}>
+                <div className={styles.above_container}>
+                    <div>Dish creation menu</div>
                 </div>
-                {dishErrors.productsQuantityError && (
-                    <p className={styles.error_message}>{dishErrors.productsQuantityError}</p>
-                )}
-                {dishErrors.productNotChosenError && (
-                    <p className={styles.error_message}>{dishErrors.productNotChosenError}</p>
-                )}
+                <div className={styles.dish_creation_menu_container}>
+                    <input
+                        type="text"
+                        name="dishName"
+                        value={dishName}
+                        placeholder="Enter your dish name here"
+                        onChange={(e) => setDishName(e.target.value)}
+                        className={`${styles.dish_name} ${dishErrors.nameError ? styles["dish_name--error"] : ""}`}
+                    />
+                    {dishErrors.nameError && (
+                        <p className={styles.error_message}>{dishErrors.nameError}</p>
+                    )}
 
-                <div className={styles.total_nutritions_container}>
-                    <div>
-                        <span>P:</span>
-                        <span>{totalNutrition.protein.toFixed(2)}</span>
+                    <div className={`${styles.products_list_container} ${
+                        (dishErrors.productsQuantityError || dishErrors.productNotChosenError)
+                        ? styles["products_list_container--error"] 
+                        : ""
+                    }`}>
+                        <span>Product Name</span>
+                        <span>Amount</span>
+                        <span>Unit</span>
+                        <span>Kcal</span>
+                        <span>P</span>
+                        <span>C</span>
+                        <span>F</span>
+                        <span>Fib</span>
+                        <span></span>
+
+                        {dishProductRows.map((row) => (
+                            <React.Fragment key={row.id}>
+                                <ProductSearchBar
+                                    key={row.id}
+                                    productsData={productsData}
+                                    defaultProductId={row.product?.product_id ?? null}
+                                    fontSize="1em"
+                                    onProductSelect={(productId) => handleProductSelect(row.id, productId)}
+                                />
+
+                                <input
+                                    type="number"
+                                    value={row.amount}
+                                    min="0"
+                                    step="0.1"
+                                    className={styles.product_amount_input}
+                                    onChange={(e) => handleAmountChange(row.id, parseFloat(e.target.value))}
+                                />
+
+                                <select
+                                    value={row.unit.unit_id}
+                                    className={styles.product_unit_select}
+                                    onChange={(e) => handleUnitChange(row.id, parseInt(e.target.value))}
+                                >
+                                    {units.map((unit) => (
+                                        <option key={unit.unit_id} value={unit.unit_id}>
+                                            {unit.unit_name}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                <span>{row.nutrition_values.kcal}</span>
+                                <span>{row.nutrition_values.protein}</span>
+                                <span>{row.nutrition_values.carbs}</span>
+                                <span>{row.nutrition_values.fats}</span>
+                                <span>{row.nutrition_values.fiber}</span>
+                                <button
+                                    className={styles.remove_row_button}
+                                    onClick={() => removeRow(row.id)}
+                                >
+                                    -
+                                </button>
+                            </React.Fragment>
+                        ))}
+
+                        <button
+                            className={styles.add_new_row_button}
+                            onClick={() => {
+                                addNewRow();
+                            }}
+                        >
+                            +
+                        </button>
                     </div>
-                    <div>
-                        <span>C:</span>
-                        <span>{totalNutrition.carbs.toFixed(2)}</span>
+                    {dishErrors.productsQuantityError && (
+                        <p className={styles.error_message}>{dishErrors.productsQuantityError}</p>
+                    )}
+                    {dishErrors.productNotChosenError && (
+                        <p className={styles.error_message}>{dishErrors.productNotChosenError}</p>
+                    )}
+
+                    <div className={styles.total_nutritions_container}>
+                        <div>
+                            <span>P:</span>
+                            <span>{totalNutrition.protein.toFixed(2)}</span>
+                        </div>
+                        <div>
+                            <span>C:</span>
+                            <span>{totalNutrition.carbs.toFixed(2)}</span>
+                        </div>
+                        <div>
+                            <span>F:</span>
+                            <span>{totalNutrition.fats.toFixed(2)}</span>
+                        </div>
+                        <div>
+                            <span>Fib:</span>
+                            <span>{totalNutrition.fiber.toFixed(2)}</span>
+                        </div>
+                        <div>
+                            <span>GL:</span>
+                            <span>{totalNutrition.glycemic_load.toFixed(2)}</span>
+                        </div>
+                        <div>
+                            <span>GI:</span>
+                            <span>{totalNutrition.glycemic_index.toFixed(2)}</span>
+                        </div>
+                        <div>
+                            <span>CHO:</span>
+                            <span>{totalNutrition.cho.toFixed(2)}</span>
+                        </div>
+                        <div>
+                            <span>PFE:</span>
+                            <span>{totalNutrition.pfe.toFixed(2)}</span>
+                        </div>
                     </div>
-                    <div>
-                        <span>F:</span>
-                        <span>{totalNutrition.fats.toFixed(2)}</span>
+
+                    <div className={styles.total_kcal_container}>
+                        <span>Kcal:</span><span>{totalNutrition.kcal.toFixed(2)}</span>
                     </div>
-                    <div>
-                        <span>Fib:</span>
-                        <span>{totalNutrition.fiber.toFixed(2)}</span>
-                    </div>
-                    <div>
-                        <span>GL:</span>
-                        <span>{totalNutrition.glycemic_load.toFixed(2)}</span>
-                    </div>
-                    <div>
-                        <span>GI:</span>
-                        <span>{totalNutrition.glycemic_index.toFixed(2)}</span>
-                    </div>
-                    <div>
-                        <span>CHO:</span>
-                        <span>{totalNutrition.cho.toFixed(2)}</span>
-                    </div>
-                    <div>
-                        <span>PFE:</span>
-                        <span>{totalNutrition.pfe.toFixed(2)}</span>
-                    </div>
+
+                    <textarea
+                        className={styles.recipe}
+                        value={dishRecipe}
+                        onChange={(e) => setDishRecipe(e.target.value)}
+                        placeholder="Enter your recipe here"
+                    />
                 </div>
 
-                <div className={styles.total_kcal_container}>
-                    <span>Kcal:</span><span>{totalNutrition.kcal.toFixed(2)}</span>
+                <div className={styles.below_container}>
+                    <button onClick={handleDishDiscard}>Discard</button>
+                    <button onClick={handleDishSave}>Save</button>
                 </div>
-
-                <textarea
-                    className={styles.recipe}
-                    value={dishRecipe}
-                    onChange={(e) => setDishRecipe(e.target.value)}
-                    placeholder="Enter your recipe here"
-                />
             </div>
 
-            <div className={styles.below_container}>
-                <button onClick={handleDishDiscard}>Discard</button>
-                <button onClick={handleDishSave}>Save</button>
-            </div>
-        </div>
+            <ConfirmationModal 
+                isOpen={showDiscardModal}
+                message="Do you want to discard your current dish and start over?"
+                onConfirm={handleConfirmDiscard}
+                onCancel={handleCancelDiscard}
+            />
+        </>
     );
 }
