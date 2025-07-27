@@ -211,7 +211,7 @@ export default function DishCreationMenu({ productsData }) {
         try {
             const requestBody = {
                 dish_name: dishName.trim(),
-                recipe: dishRecipe.trim(),
+                recipe: dishRecipe.trim() || null,
                 dietitian_id: dietitianId,
                 products: mapProductDataForNewDish(dishProductRows),
             }
@@ -233,7 +233,7 @@ export default function DishCreationMenu({ productsData }) {
         try {
             const requestBody = {
                 dish_name: dishName.trim(),
-                recipe: dishRecipe.trim(),
+                recipe: dishRecipe.trim() || null,
                 products: mapProductDataForNewDish(dishProductRows),
             }
             console.log("[PATCH] requestBody:", requestBody);
