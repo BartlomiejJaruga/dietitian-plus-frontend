@@ -38,7 +38,7 @@
         padding: 0.6em;
 
         background-color: $Beige;
-        box-shadow: 0 0.2em 0.25em rgba(0,0,0, 0.25);
+        box-shadow: 0 0.1em 0.15em rgba(0,0,0, 0.75);
         transition: 0.25s background-color ease;
         cursor: pointer;
 
@@ -73,7 +73,7 @@
         border-radius: 0.25em;
 
         background-color: $Red;
-        box-shadow: 0 0.125em 0.1em rgba(0,0,0, 0.25);
+        box-shadow: 0 0.05em 0.1em rgba(0,0,0, 0.75);
         transition: background-color 0.2s ease;
         cursor: pointer;
 
