@@ -14,6 +14,7 @@ export const authMiddleware = store => next => action => {
     if (logoutUser.match(action)) {
         sessionStorage.removeItem(sessionSavedSettingsDataENUM.USER_DATA);
         sessionStorage.removeItem(sessionSavedSettingsDataENUM.IS_PATIENT_QUESTIONNAIRE_COMPLETED);
+        sessionStorage.removeItem(sessionSavedSettingsDataENUM.UNITS_DATA);
     }
 
     return next(action);

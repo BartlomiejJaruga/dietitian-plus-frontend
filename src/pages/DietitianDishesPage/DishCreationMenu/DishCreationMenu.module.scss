@@ -1,0 +1,228 @@
+.main_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.5em;
+
+    width: 45%;
+    min-width: 45rem;
+    height: auto;
+
+    .above_container {
+        align-self: flex-start;
+
+        div {
+            padding: 0.5em 0.75em;
+
+            background-color: $White;
+            box-shadow: -0.1em -0.1em 0.3em rgba(0,0,0, 0.25) inset;
+            border-radius: 0.5em;
+
+            font-size: inherit;
+        }
+    }
+    
+    .dish_creation_menu_container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.5em;
+
+        width: 100%;
+        height: auto;
+        padding: 1.5em 0;
+
+        background-color: $White;
+        box-shadow: 0.1em 0.1em 1em 0.1em rgba(0,0,0, 0.25) inset;
+        border-radius: 1rem;
+
+        .error_message {
+            color: $Red;
+        }
+
+        .dish_name {
+            box-sizing: border-box;
+            width: 90%;
+            padding: 1.25em;
+
+            border: 0;
+            
+            background-color: $White;
+            box-shadow: 0.1em 0.1em 0.5em rgba(0,0,0, 0.25) inset;
+            
+            font-size: 1.5em;
+            text-align: center;
+
+            &--error {
+                border: 0.1em solid $Red;
+            }
+        }
+
+        .products_list_container {
+            width: 90%;
+            margin: 3em 0 1em 0;
+
+            display: grid;
+            grid-template-columns: 3fr 1fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            gap: 1em 0.25em;
+            place-items: center;
+
+            &--error {
+                padding: 0.5em;
+                border: 0.15em solid $Red;
+                border-radius: 0.5em;
+                margin-bottom: 0;
+            }
+
+            .product_amount_input {
+                box-sizing: border-box;
+
+                width: auto;
+                max-width: 5em;
+                padding: 1.25em 0.75em;
+
+                background-color: $White;
+                box-shadow: 0.1em 0.1em 0.5em 0.1em rgba(0,0,0, 0.25) inset;
+            }
+            
+            .product_unit_select {
+                box-sizing: border-box;
+
+                border-radius: 0.5em;
+                border: 0;
+                
+                padding: 0.9em 0.75em;
+
+                background-color: $White;
+                box-shadow: 0.1em 0.1em 0.5em 0.1em rgba(0,0,0, 0.25) inset;
+            }
+
+            button {
+                width: 1.25em;
+                height: 1.25em;
+
+                border: 0;
+
+                transition: background-color 0.2s ease;
+                cursor: pointer;
+                box-shadow: -0.1em -0.1em 0.2em rgba(0,0,0, 0.4) inset,
+                            0.1em 0.1em 0.2em rgba(255,255,255, 0.5) inset;
+
+                color: $Text-White-Texts;
+                font-size: 1.75em;
+            }
+
+            .remove_row_button {
+                border-radius: 0.25em;
+                background-color: $Red;
+
+                font-size: 1.5em;
+            
+                &:hover {
+                    background-color: $Red-Hover;
+                }
+            }
+
+            .add_new_row_button {
+                border-radius: 50%;
+                background-color: $Green;
+
+                &:hover {
+                    background-color: $Green-Hover;
+                }
+            }
+        }
+
+        .total_nutritions_container {
+            display: flex;
+            flex-wrap: wrap;
+
+            width: 90%;
+            padding-top: 0.5em;
+            border-top: 0.1em solid $Gray;   
+
+            font-size: 1.25em;
+            
+            span:nth-of-type(odd) {
+                margin-right: 0.25em;
+                font-weight: 500;
+            }
+
+            span:nth-of-type(even) {
+                margin-right: 1em;
+            }
+        }
+
+        .total_kcal_container {
+            display: flex;
+            width: 90%;
+
+            font-size: 1.25em;
+
+            span {
+                color: $Green;
+            }
+
+            span:nth-of-type(odd) {
+                margin-right: 0.25em;
+                font-weight: 500;
+            }
+        }
+
+        .recipe {
+            width: 90%;
+            min-height: 30vh;
+            
+            margin-top: 3em;
+            padding: 0.75em;
+            
+            border: 0;
+            border-radius: 0.5em;
+            box-shadow: 0.1em 0.1em 0.5em 0.1em rgba(0,0,0, 0.25) inset;
+
+            font-size: 1.25em;
+        }
+    }
+
+    .below_container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 2em;
+
+        width: 100%;
+        height: auto;
+
+        button {
+            padding: 0.5em 1em;
+            
+            border: 0;
+            border-radius: 0.5em;
+
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            box-shadow: 0 0.15em 0.15em rgba(0,0,0, 0.75);
+
+            font-size: 1.25em;
+            color: $Text-White-Texts;
+        }
+
+        button:nth-of-type(1) {
+            background-color: $Red;
+
+            &:hover {
+                background-color: $Red-Hover;
+            }
+        }
+
+        button:nth-of-type(2) {
+            background-color: $Green;
+
+            &:hover {
+                background-color: $Green-Hover;
+            }
+        }
+    }
+}

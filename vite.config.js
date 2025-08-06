@@ -21,6 +21,7 @@ export default defineConfig({
       "@images": path.resolve(__dirname, "src/assets/images"),
       "@services": path.resolve(__dirname, "src/services"),
       "@routes": path.resolve(__dirname, "src/routes"),
+      "@hooks": path.resolve(__dirname, "src/hooks"),
     },
   },
   css: {

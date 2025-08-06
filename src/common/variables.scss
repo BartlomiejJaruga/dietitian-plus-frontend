@@ -30,6 +30,7 @@ $Dark-Green-Hover: color.adjust($Dark-Green, $lightness: -10%);
 $Green: #4CAF50;
 $Green-Hover: color.adjust($Green, $lightness: -10%);
 $White: #ffffff;
+$White-Hover: #dbdbdb;
 $Darker-White: #ebebeb;
 $Black: #000000;
 $Lighter-Black: #2f2f2f;
@@ -39,7 +40,12 @@ $Beige-Hover: color.adjust($Beige, $lightness: -15%);
 $Light-Blue: #00C8DF;
 $Yellow: #F3C333;
 $Red: #C81E18;
+$Red-Hover: color.adjust($Red, $lightness: -10%);
 
+$color-error: #f44336;
+$color-success: #4caf50;
+$color-warning: #e68a00;
+$color-info: #2196f3;
 
 // ---- TEXT COLORS PALLETE ----
 $Text-Black-Headers: #1a1a1a;
