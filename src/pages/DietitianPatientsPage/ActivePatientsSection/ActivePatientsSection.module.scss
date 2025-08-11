@@ -28,12 +28,11 @@
     min-height: 70vh;
     width: 100%;
 
-    padding: 1em;
+    padding: 1.5em;
     
     border-radius: 0.5em;
     background-color: $White;
-    box-shadow: -0.1em -0.1em 0.2em rgba(0,0,0, 0.4) inset,
-                0.2em 0.2em 0.25em rgba(0,0,0, 0.4) inset;
+    box-shadow: 0.1em 0.1em 0.75em 0.1em rgba(0,0,0, 0.25) inset;
 
     & > h4 {
         display: flex;
