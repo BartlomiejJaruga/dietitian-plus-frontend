@@ -55,47 +55,4 @@
         border-radius: 0.3em;
         box-shadow: 0 0 0.25em rgba(0,0,0, 0.4);
     }
-
-    .option_buttons {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 1em;
-
-        & > button {
-            padding: 0.25em;
-
-            border-radius: 0.3em;
-            border: 0;
-
-            box-shadow: 0 0.2em 0.25em rgba(0,0,0, 0.75);
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-
-        .option_buttons_plan_diet {
-            background-color: $Green;
-            color: $Text-White-Texts;
-
-            &:hover {
-                background-color: $Green-Hover;
-            }
-        }
-
-        .option_buttons_more_info {
-            background-color: $Beige;
-
-            &:hover {
-                background-color: $Beige-Hover;
-            }
-        }
-
-        .option_buttons_delete {
-            background-color: $Red;
-            color: $Text-White-Texts;
-
-            &:hover {
-                background-color: $Red-Hover;
-            }
-        }
-    }
 }
