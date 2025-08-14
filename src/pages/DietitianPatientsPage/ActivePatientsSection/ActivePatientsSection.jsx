@@ -25,9 +25,8 @@ export default function ActivePatientsSection() {
 
     const loadPatientsData = async () => {
         try {
-            const response = await axiosInstance.get(`/v1/dietitians/${dietitianId}/patients`);
+            await axiosInstance.get(`/v1/dietitians/${dietitianId}/patients`);
 
-            console.log(response);
             setLoadedPatientsData(response.data);
         }
         catch(error){
