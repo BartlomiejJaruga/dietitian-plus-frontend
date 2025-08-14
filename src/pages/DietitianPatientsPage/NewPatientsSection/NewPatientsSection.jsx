@@ -29,7 +29,7 @@ export default function NewPatientsSection() {
                 dietitian_id: dietitianId,
             }
 
-            const response = await axiosInstance.post(
+            await axiosInstance.post(
                 '/v1/patients/dietitians',
                 requestBody,
                 {
@@ -39,11 +39,37 @@ export default function NewPatientsSection() {
                 }
             );
 
-            console.log(response);
+            setPatientEmail("");
             toastNotification("Patient successfully assigned.", toastNotificationTypesENUM.SUCCESS);
         }
         catch(error){
-            console.log(error);
+            if(error?.response?.status === 400){
+                toastNotification(
+                    "Patient already assigned to dietitian.", 
+                    toastNotificationTypesENUM.ERROR
+                );
+            }
+            else if(error?.response?.status === 401){
+                toastNotification(
+                    "Unauthorized action.", 
+                    toastNotificationTypesENUM.ERROR
+                );
+            }
+            else if(error?.response?.status === 403){
+                toastNotification(
+                    "Access denied. Re-login.", 
+                    toastNotificationTypesENUM.ERROR
+                );
+            }
+            else if(error?.response?.status === 404){
+                toastNotification(
+                    "Patient with such email does not exist.", 
+                    toastNotificationTypesENUM.ERROR
+                );
+            }
+            else{
+                console.error(error);
+            }
         }
     };
 
