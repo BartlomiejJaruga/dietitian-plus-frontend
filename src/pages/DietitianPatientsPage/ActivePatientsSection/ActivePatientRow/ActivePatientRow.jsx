@@ -5,9 +5,12 @@ import ConfirmationModal from "@components/ConfirmationModal/ConfirmationModal";
 import axiosInstance from "@services/axiosInstance";
 import { useToastNotification } from "@hooks/useToastNotification";
 import { toastNotificationTypesENUM } from "@enums";
+import { useDispatch } from "react-redux";
+import { setHasPatientsChanged } from "@slices/patientsTabSlice";
 
 export default function ActivePatientRow({ patientData }) {
     const toastNotification = useToastNotification();
+    const dispatch = useDispatch();
     const [showDeletePatientModal, setShowDeletePatientModal] = useState(false);
 
     const handlePatientDelete = () => {
@@ -18,6 +21,7 @@ export default function ActivePatientRow({ patientData }) {
         try {
             await axiosInstance.delete(`/v1/patients/${patientData.patient_id}/dietitians`);
 
+            dispatch(setHasPatientsChanged({ hasPatientsChanged: true }));
             setShowDeletePatientModal(false);
             toastNotification(
                 "Patient deleted successfully.",

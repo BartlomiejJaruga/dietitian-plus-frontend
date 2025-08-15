@@ -1,13 +1,16 @@
 import styles from "./ActivePatientsSection.module.scss";
 
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axiosInstance from "@services/axiosInstance";
 import LoadingIndicator from "@components/LoadingIndicator/LoadingIndicator";
 import ActivePatientsRow from "./ActivePatientRow/ActivePatientRow";
+import { setHasPatientsChanged } from "@slices/patientsTabSlice";
 
 export default function ActivePatientsSection() {
+    const dispatch = useDispatch();
     const dietitianId = useSelector((state) => state.auth.userData.uuid);
+    const hasPatientsChanged = useSelector((state) => state.patientsTab.hasPatientsChanged);
     const [loadedPatientsData, setLoadedPatientsData] = useState([]);
     const [isPageBeingLoaded, setIsPageBeingLoaded] = useState(false);
 
@@ -22,6 +25,21 @@ export default function ActivePatientsSection() {
 
         loadInitialPatients();
     }, []);
+
+    useEffect(() => {
+        if (!hasPatientsChanged) return;
+    
+        const reloadData = async () => {
+            setIsPageBeingLoaded(true);
+
+            loadPatientsData();
+            dispatch(setHasPatientsChanged({ hasPatientsChanged: false }));
+
+            setIsPageBeingLoaded(false);
+        };
+
+        reloadData();
+    }, [hasPatientsChanged]);
 
     const loadPatientsData = async () => {
         try {

@@ -3,11 +3,13 @@ import styles from "./NewPatientsSection.module.scss";
 import { useId, useState } from "react";
 import { useToastNotification } from "@hooks/useToastNotification";
 import axiosInstance from "@services/axiosInstance";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toastNotificationTypesENUM } from "@enums";
+import { setHasPatientsChanged } from "@slices/patientsTabSlice";
 
 export default function NewPatientsSection() {
     const toastNotification = useToastNotification();
+    const dispatch = useDispatch();
     const uniqueId = useId();
     const dietitianId = useSelector((state) => state.auth.userData.uuid);
     const [patientEmail, setPatientEmail] = useState("");
@@ -40,6 +42,7 @@ export default function NewPatientsSection() {
             );
 
             setPatientEmail("");
+            dispatch(setHasPatientsChanged({ hasPatientsChanged: true }));
             toastNotification("Patient successfully assigned.", toastNotificationTypesENUM.SUCCESS);
         }
         catch(error){
