@@ -25,7 +25,7 @@ export default function ActivePatientsSection() {
 
     const loadPatientsData = async () => {
         try {
-            await axiosInstance.get(`/v1/dietitians/${dietitianId}/patients`);
+            const response = await axiosInstance.get(`/v1/dietitians/${dietitianId}/patients`);
 
             setLoadedPatientsData(response.data);
         }
@@ -38,7 +38,10 @@ export default function ActivePatientsSection() {
         <>
             <div className={styles.main_container}>
                 <h3>Active Patients</h3>
-                <div className={styles.patients_container}>
+                <div className={`
+                    ${styles.patients_container}
+                    ${loadedPatientsData.length > 0 ? styles["patients_container--grid"] : styles["patients_container--flex"]}
+                `}>
                     {isPageBeingLoaded && (
                         <LoadingIndicator message="Loading patients..." fontSize="2rem"/>
                     )}
