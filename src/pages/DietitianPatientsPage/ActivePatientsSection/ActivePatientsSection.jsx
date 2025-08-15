@@ -45,11 +45,28 @@ export default function ActivePatientsSection() {
         try {
             const response = await axiosInstance.get(`/v1/dietitians/${dietitianId}/patients`);
 
-            setLoadedPatientsData(response.data);
+            const sortedPatients = sortPatientsAlphebaticaly(response.data);
+            setLoadedPatientsData(sortedPatients);
         }
         catch(error){
             console.error(error);
         }
+    }
+
+    const sortPatientsAlphebaticaly = (patients) => {
+        return [...patients].sort((a, b) => {
+            const lastNameCompare = a.last_name
+                .toLowerCase()
+                .localeCompare(b.last_name.toLowerCase(), "pl", { sensitivity: "base" });
+            
+            if (lastNameCompare !== 0) {
+                return lastNameCompare;
+            }
+            
+            return a.first_name
+                .toLowerCase()
+                .localeCompare(b.first_name.toLowerCase(), "pl", { sensitivity: "base" });
+        });
     }
 
     return (
