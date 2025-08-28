@@ -7,9 +7,11 @@ import { useToastNotification } from "@hooks/useToastNotification";
 import { toastNotificationTypesENUM } from "@enums";
 import { useDispatch } from "react-redux";
 import { setHasPatientsChanged } from "@slices/patientsTabSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function ActivePatientRow({ patientData }) {
     const toastNotification = useToastNotification();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [showDeletePatientModal, setShowDeletePatientModal] = useState(false);
 
@@ -37,6 +39,10 @@ export default function ActivePatientRow({ patientData }) {
         setShowDeletePatientModal(false);
     }
 
+    const handleNavigateToPatientInfo = () => {
+        navigate(`/dietitian/patients/${patientData.patient_id}/info`);
+    }
+
     return (
         <>
             <>
@@ -51,6 +57,7 @@ export default function ActivePatientRow({ patientData }) {
                     </button>
                     <button 
                         className={styles.option_buttons_more_info}
+                        onClick={handleNavigateToPatientInfo}
                     >
                         More info
                     </button>
