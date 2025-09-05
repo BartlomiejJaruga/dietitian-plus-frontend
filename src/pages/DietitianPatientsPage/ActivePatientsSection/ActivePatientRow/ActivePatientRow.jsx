@@ -48,7 +48,7 @@ export default function ActivePatientRow({ patientData }) {
             <>
                 <h5>{patientData.first_name}</h5>
                 <h5>{patientData.last_name}</h5>
-                <h5>john.pork@gmail.com</h5>
+                <h5>{patientData.email}</h5>
                 <div className={styles.option_buttons}>
                     <button 
                         className={styles.option_buttons_plan_diet}
