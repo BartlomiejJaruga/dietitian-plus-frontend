@@ -113,17 +113,38 @@
 
             .bmi_value {
                 @include apply-font($font-headings);
+                font-size: 2em;
 
-                &--normal {
-
+                &--severe-underweight {
+                    color: #04a5ef;
                 }
 
-                &--medium {
-
+                &--moderate-underweight {
+                    color: #5489e5;
                 }
 
-                &--big {
+                &--mild-underweight {
+                    color: #7a5195;
+                }
 
+                &--normal-weight {
+                    color: #4caf50;
+                }
+
+                &--overweight {
+                    color: #ffeb3b;
+                }
+
+                &--obesity-class-i {
+                    color: #ff9800;
+                }
+
+                &--obesity-class-ii {
+                    color: #f44336;
+                }
+
+                &--obesity-class-iii {
+                    color: #7f0000;
                 }
             }
         }

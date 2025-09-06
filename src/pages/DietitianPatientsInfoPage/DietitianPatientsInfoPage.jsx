@@ -67,6 +67,23 @@ export default function DietitianPatientsInfoPage() {
         return result.toFixed(2);
     }
 
+    function getBmiClass(bmi) {
+        if (bmi < 16) return "bmi_value--severe-underweight";
+        if (bmi < 17) return "bmi_value--moderate-underweight";
+        if (bmi < 18.5) return "bmi_value--mild-underweight";
+        if (bmi < 25) return "bmi_value--normal-weight";
+        if (bmi < 30) return "bmi_value--overweight";
+        if (bmi < 35) return "bmi_value--obesity-class-i";
+        if (bmi < 40) return "bmi_value--obesity-class-ii";
+        return "bmi_value--obesity-class-iii";
+    }
+
+
+    const currentBMI = calculateBMI(
+        loadedPatientData.current_weight,
+        loadedPatientData.height
+    );
+
     return (
         <>
             <NavBar />
@@ -119,11 +136,8 @@ export default function DietitianPatientsInfoPage() {
                                     </div>
                                     <div>
                                         <h2>BMI</h2>
-                                        <h2 className={styles.bmi_value}>
-                                            {calculateBMI(
-                                                loadedPatientData.current_weight,
-                                                loadedPatientData.height
-                                            )}
+                                        <h2 className={`${styles.bmi_value} ${styles[getBmiClass(currentBMI)]}`}>
+                                            {currentBMI}
                                         </h2>
                                     </div>
                                 </div>
