@@ -67,6 +67,10 @@ export default function DietitianPatientsInfoPage() {
         navigate("/dietitian/patients");
     }
 
+    const handleDietPlanButton = () => {
+        navigate(`/dietitian/patients/${patientId}/diet`);
+    }
+
     const calculateBMI = (weight, height) => {
         const heightInMeters = parseInt(height)/100;
         const result = parseFloat(parseFloat(weight) / (heightInMeters * heightInMeters));
@@ -102,7 +106,10 @@ export default function DietitianPatientsInfoPage() {
                         <ArrowLeft className={styles.arrow_left_icon}/>
                         Patients List
                     </button>
-                    <button className={styles.diet_plan_button}>
+                    <button 
+                        className={styles.diet_plan_button}
+                        onClick={handleDietPlanButton}
+                    >
                         Diet plan
                     </button>
                 </div>
