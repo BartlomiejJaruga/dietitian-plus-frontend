@@ -213,3 +213,18 @@
     }
 }
 
+.nothing_to_show_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+
+    width: 100%;
+    padding: 0.5em 1em;
+
+    & > h3 {
+        @include apply-font($font-headings);
+        font-weight: 500;
+    }
+}
+

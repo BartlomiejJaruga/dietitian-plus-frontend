@@ -53,7 +53,6 @@ export default function DietitianPatientsInfoPage() {
         try {
             const response = await axiosInstance.get(`/v1/patients/${patientId}/disliked-products`);
 
-            console.log(response.data);
             setLoadedPatientDislikedProducts(response.data);
         }
         catch(error){
@@ -122,7 +121,16 @@ export default function DietitianPatientsInfoPage() {
                             <h3>Allergies</h3>
                             <div className={styles.allergies_list}>
                                 <div className={styles.scrollbar_container}>
-                                    {loadedPatientAllergies.map((product) => {
+                                    {loadedPatientAllergies.length <= 0 && (
+                                        <>
+                                            <div className={styles.nothing_to_show_container}>
+                                                <h3>Patient haven't declared<br/> any allergies</h3>
+                                                <p>Patient can fill his allergies<br/> in his account panel</p>
+                                            </div>
+                                        </>
+                                    )}
+                                    
+                                    {loadedPatientAllergies.length > 0 && loadedPatientAllergies.map((product) => {
                                         return (
                                             <span 
                                                 key={product.product_id}
@@ -139,7 +147,16 @@ export default function DietitianPatientsInfoPage() {
                             <h3>Disliked products</h3>
                             <div className={styles.disliked_products_list}>
                                 <div className={styles.scrollbar_container}>
-                                    {loadedPatientDislikedProducts.map((product) => {
+                                    {loadedPatientDislikedProducts.length <= 0 && (
+                                        <>
+                                            <div className={styles.nothing_to_show_container}>
+                                                <h3>Patient haven't declared<br/> any disliked products</h3>
+                                                <p>Patient can fill his disliked products<br/> in his account panel</p>
+                                            </div>
+                                        </>
+                                    )}
+                                    
+                                    {loadedPatientDislikedProducts.length > 0 && loadedPatientDislikedProducts.map((product) => {
                                         return (
                                             <span 
                                                 key={product.product_id}
