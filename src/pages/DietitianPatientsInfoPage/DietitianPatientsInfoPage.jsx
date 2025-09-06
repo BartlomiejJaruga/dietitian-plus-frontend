@@ -3,10 +3,12 @@ import styles from "./DietitianPatientsInfoPage.module.scss";
 import NavBar from "@components/NavBar/NavBar";
 import axiosInstance from "@services/axiosInstance";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LoadingIndicator from "@components/LoadingIndicator/LoadingIndicator";
+import ArrowLeft from "@icons/simple-arrow-left.svg?react";
 
 export default function DietitianPatientsInfoPage() {
+    const navigate = useNavigate();
     const { patientId }= useParams();
     const [loadedPatientData, setLoadedPatientData] = useState({});
     const [loadedPatientAllergies, setLoadedPatientAllergies] = useState([]);
@@ -61,6 +63,10 @@ export default function DietitianPatientsInfoPage() {
         }
     }
 
+    const handleBackToPatientListButton = () => {
+        navigate("/dietitian/patients");
+    }
+
     const calculateBMI = (weight, height) => {
         const heightInMeters = parseInt(height)/100;
         const result = parseFloat(parseFloat(weight) / (heightInMeters * heightInMeters));
@@ -89,6 +95,13 @@ export default function DietitianPatientsInfoPage() {
             <NavBar />
             <div className={styles.main_container}>
                 <div className={styles.top_container}>
+                    <button 
+                        className={styles.back_to_patients_list_button}
+                        onClick={handleBackToPatientListButton}
+                    >
+                        <ArrowLeft className={styles.arrow_left_icon}/>
+                        Patients List
+                    </button>
                     <button className={styles.diet_plan_button}>
                         Diet plan
                     </button>
