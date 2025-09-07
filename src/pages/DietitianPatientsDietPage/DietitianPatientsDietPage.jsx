@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingIndicator from "@components/LoadingIndicator/LoadingIndicator";
 import ArrowLeft from "@icons/simple-arrow-left.svg?react";
+import Calendar from "./Calendar/Calendar";
 
 export default function DietitianPatientsDietPage() {
     const navigate = useNavigate();
@@ -102,7 +103,7 @@ export default function DietitianPatientsDietPage() {
                 {!isPageBeingLoaded && (
                     <>
                         <div className={styles.calendar_container}>
-
+                            <Calendar />
                         </div>
                     </>
                 )}
