@@ -90,6 +90,9 @@ export default function DietitianPatientsDietPage() {
                     >
                         Patient Details
                     </button>
+                    <div className={styles.patient_name_container}>
+                        <h1>{loadedPatientData.first_name} {loadedPatientData.last_name}</h1>
+                    </div>
                 </div>
                 
                 {isPageBeingLoaded && (

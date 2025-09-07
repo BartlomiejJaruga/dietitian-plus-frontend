@@ -59,6 +59,16 @@
             fill: $Text-White-Texts;
         }
     }
+
+    .patient_name_container {
+        flex-grow: 1;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        @include apply-font($font-headings);
+    }
 }
 
 .calendar_container {
