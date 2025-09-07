@@ -37,6 +37,7 @@ export default function DishModal({ open, onClose, onConfirm, dietitianDishes })
         <div className={styles.backdrop}>
             <div className={styles.modal}>
                 <h2>Add new dish</h2>
+                <span className={styles.selected_dish_header}>Search bar:</span>
                 <input
                     type="text"
                     name="dish_name"
