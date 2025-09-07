@@ -43,6 +43,10 @@ export default function ActivePatientRow({ patientData }) {
         navigate(`/dietitian/patients/${patientData.patient_id}/info`);
     }
 
+    const handleNavigateToPatientDiet = () => {
+        navigate(`/dietitian/patients/${patientData.patient_id}/diet`);
+    }
+
     return (
         <>
             <>
@@ -52,6 +56,7 @@ export default function ActivePatientRow({ patientData }) {
                 <div className={styles.option_buttons}>
                     <button 
                         className={styles.option_buttons_plan_diet}
+                        onClick={handleNavigateToPatientDiet}
                     >
                         Plan Diet
                     </button>
@@ -72,8 +77,8 @@ export default function ActivePatientRow({ patientData }) {
 
             <ConfirmationModal 
                 isOpen={showDeletePatientModal}
-                message={`Are you sure you want to delete patient ${patientData.first_name} ${patientData.last_name} (email@example.com)?`}
-                messageToHighlight={`${patientData.first_name} ${patientData.last_name} (email@example.com)`}
+                message={`Are you sure you want to delete patient ${patientData.first_name} ${patientData.last_name} (${patientData.email})?`}
+                messageToHighlight={`${patientData.first_name} ${patientData.last_name} (${patientData.email})`}
                 onConfirm={handleConfirmDeletePatient}
                 onCancel={handleCancelDeletePatient}
             />
