@@ -343,10 +343,11 @@
         .modal_actions {
             display: flex;
             justify-content: flex-end;
-            gap: 1em;
+            gap: 1.5em;
+            width: 100%;
 
             .button_confirm {
-                background-color: #2ecc71;
+                background-color: $Green;
                 color: #fff;
                 padding: 0.6em 1.2em;
                 border: none;
@@ -356,7 +357,7 @@
                 transition: background-color 0.2s ease;
 
                 &:hover:enabled {
-                    background-color: #27ae60;
+                    background-color: $Green-Hover;
                 }
 
                 &:disabled {
@@ -366,7 +367,7 @@
             }
 
             .button_cancel {
-                background-color: #e74c3c;
+                background-color: $Red;
                 color: #fff;
                 padding: 0.6em 1.2em;
                 border: none;
@@ -376,7 +377,7 @@
                 transition: background-color 0.2s ease;
 
                 &:hover {
-                    background-color: #c0392b;
+                    background-color: $Red-Hover;
                 }
             }
         }
