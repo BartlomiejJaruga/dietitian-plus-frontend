@@ -1,29 +1,31 @@
 import styles from "./PatientDashboardPage.module.scss";
 
 import NavBar from "@components/NavBar/NavBar";
-import Arrow from "@icons/simple-arrow-left.svg?react";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 export default function PatientDashboardPage(){
-    const navigate = useNavigate();
-    const user = useSelector((state) => state.auth.userData);
-
-    const handleReturn = () => {
-        navigate("/");
-    }
     
+    const reloadPage = () => {
+        window.location.reload();
+    }
+
     return (
         <>
             <NavBar />
-            <div className={styles.return_to_home_page_button} onClick={handleReturn}>
-                <Arrow className={styles.return_to_home_page_button_arrow}/>
-                <span>Return to Home Page</span>
-            </div>
-            <div className={styles.patient_dashboard_page_container}>
-                <h1>Patient Dashboard Page</h1>
-                <span>{`Hello ${user.first_name} ${user.last_name} (${user.email})!`}</span>
-                <p>{`UUID: ${user.uuid}`}</p>
+            <div className={styles.main_container}>
+                <div className={styles.nothing_to_see_information_container}>
+                    <div className={styles.nothing_to_see_modal}>
+                        <h3>Why you don't see anything?</h3>
+                        <p>
+                            You currently don’t have an assigned dietitian. Once a dietitian adds you to their care list, your personalized dashboard will become available.
+                        </p>
+                    </div>
+                    <button 
+                        className={styles.refresh_button}
+                        onClick={reloadPage}
+                    >
+                        Refresh
+                    </button>
+                </div>
             </div>
         </>
     )
