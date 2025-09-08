@@ -1,0 +1,34 @@
+.dish {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em;
+    width: 100%;
+    height: 3.125rem;
+    background: #e0f7fa;
+    border: 0.0625rem solid #0097a7;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+
+    .delete_button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $Red;
+        transition: background-color 0.2s ease;
+        padding: 0.4em;
+        border: 0;
+        border-radius: 0.5em;
+
+        &:hover {
+            background-color: $Red-Hover;
+        }
+
+        .delete_icon {
+            fill: $White;
+            width: 1.5em;
+            height: 1.5em;
+            font-size: 1em;
+        }
+    }
+}

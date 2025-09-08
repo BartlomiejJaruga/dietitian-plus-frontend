@@ -1,0 +1,80 @@
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    width: 100%;
+    background: #fff;
+    border: 0.0625rem solid #ccc;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    user-select: none;
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.handle {
+    background-color: $Darker-White;
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    cursor: grab;
+    font-weight: bold;
+}
+
+.handle:active {
+    cursor: grabbing;
+}
+
+.title {
+    flex: 1;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.dishes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.addDish {
+    width: 100%;
+    height: 3.125rem;
+    border: 0.125rem dashed #aaa;
+    border-radius: 0.25rem;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: #555;
+}
+
+.addDish:hover {
+    border-color: #4caf50;
+    color: #4caf50;
+}
+
+.overlay {
+    background: #fff3cd;
+    border: 0.0625rem dashed #f0ad4e;
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.datetime {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 0.25rem;
+    text-align: center;
+}

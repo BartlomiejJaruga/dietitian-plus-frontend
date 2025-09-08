@@ -2,12 +2,69 @@
     display: flex;
     flex-direction: column;
 
-    padding: 1em 1em 10vh 1em;
+    padding-bottom: 10vh;
+}
+
+.top_container {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    padding: 1em;
+
+    .diet_plan_button {
+        padding: 0.5em 1em;
+        
+        background-color: $Beige;
+        border-radius: 0.25em;
+        border: 0;
+        
+        font-size: 1.25em;
+        color: $Text-Black-Texts;
+        line-height: 1;
+
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        box-shadow: 0 0.15em 0.15em rgba(0,0,0, 0.75);
+
+        &:hover {
+            background-color: $Beige-Hover;
+        }
+    }
+
+    .back_to_patients_list_button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75em;
+
+        padding: 0.5em 1em;
+        
+        background-color: $Green;
+        border-radius: 0.25em;
+        border: 0;
+        
+        font-size: 1.25em;
+        color: $Text-White-Texts;
+        line-height: 1;
+
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        box-shadow: 0 0.15em 0.15em rgba(0,0,0, 0.75);
+
+        &:hover {
+            background-color: $Green-Hover;
+        }
+
+        .arrow_left_icon {
+            fill: $Text-White-Texts;
+        }
+    }
 }
 
 .patient_info_container {
     display: flex;
     gap: 1em;
+    padding: 0 1em 1em 1em;
 
     .patient_main_info_section {
         display: flex;
@@ -25,41 +82,6 @@
             border-radius: 0.5em;
 
             font-weight: 300;
-        }
-
-        .info_header_row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            & > h3 {
-                width: fit-content;
-                padding: 0.3em 1em;
-
-                background-color: $White;
-                box-shadow: -0.1em -0.1em 0.3em rgba(0,0,0, 0.25) inset;
-                border-radius: 0.5em;
-
-                font-weight: 300;
-            }
-
-            .update_button {
-                padding: 0.75em 1em;
-                
-                box-shadow: 0 0.15em 0.15em rgba(0, 0, 0, 0.75);
-                border: none;
-                border-radius: 0.5em;
-                background-color: $Green;
-                transition: background-color 0.2s ease;
-                
-                cursor: pointer;
-                color: $White;
-                font-size: 0.8em;
-
-                &:hover {
-                    background-color: $Green-Hover;
-                }
-            }
         }
 
         .patient_name_container {
@@ -112,31 +134,10 @@
                     .patient_info_list_item_content {
                         padding: 0.5em 1em;
                         
-                        background-color: $White-Hover;
+                        background-color: $Darker-White;
                         border-radius: 0.5em;
 
-                        color: $Text-Black-SubTexts;
                         text-align: left;
-                    }
-
-                    .patient_info_list_item_input {
-                        padding: 0.5em 1em;
-                        
-                        background-color: $Darker-White;
-                        border-radius: 0.5em;
-                        border: 0.1em solid $Text-Black-SubTexts;
-                        font-size: 1em;
-                        @include apply-font($font-general);
-                    }
-
-                    .patient_info_list_item_select {
-                        padding: 0.5em 0.75em;
-                        
-                        background-color: $Darker-White;
-                        border-radius: 0.5em;
-                        border: 0.1em solid $Text-Black-SubTexts;
-                        font-size: 1em;
-                        @include apply-font($font-general);
                     }
                 }
             }
@@ -226,41 +227,12 @@
                     max-height: calc(400px - 2em);
 
                     .list_item {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-
-                        padding: 0.5em 0.5em 0.5em 0.75em;
+                        padding: 0.25em 0.5em;
 
                         background-color: $White;
                         box-shadow: 0 0 0.2em rgba(0,0,0, 0.4);
 
                         text-align: left;
-
-                        .list_item_remove_button {
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            
-                            width: 2.25em;
-                            height: 2.25em;
-
-                            background-color: $Red;
-                            border: none;
-                            border-radius: 0.25em;
-                            transition: background-color 0.2s ease;
-                            cursor: pointer;
-
-                            @include apply-font($font-headings);
-                            font-weight: 500;
-                            line-height: 1;
-                            text-align: center;
-                            color: $White;
-
-                            &:hover {
-                                background-color: $Red-Hover;
-                            }
-                        }
                     }
 
                     overflow-y: scroll;
@@ -316,106 +288,3 @@
     padding: 1em 0.5em;
 }
 
-
-.modal_backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-
-    .modal {
-        background: #fff;
-        border-radius: 1em;
-        padding: 2em;
-        width: 90%;
-        max-width: 500px;
-        box-shadow: 0 0.5em 2em rgba(0, 0, 0, 0.25);
-        display: flex;
-        flex-direction: column;
-        gap: 1.5em;
-
-        .modal_actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 1.5em;
-            width: 100%;
-
-            .button_confirm {
-                background-color: $Green;
-                color: #fff;
-                padding: 0.6em 1.2em;
-                border: none;
-                border-radius: 0.5em;
-                cursor: pointer;
-                font-weight: 600;
-                transition: background-color 0.2s ease;
-
-                &:hover:enabled {
-                    background-color: $Green-Hover;
-                }
-
-                &:disabled {
-                    background-color: #bdc3c7;
-                    cursor: not-allowed;
-                }
-            }
-
-            .button_cancel {
-                background-color: $Red;
-                color: #fff;
-                padding: 0.6em 1.2em;
-                border: none;
-                border-radius: 0.5em;
-                cursor: pointer;
-                font-weight: 600;
-                transition: background-color 0.2s ease;
-
-                &:hover {
-                    background-color: $Red-Hover;
-                }
-            }
-        }
-    }
-}
-
-.section_header_row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    & > h3 {
-        width: fit-content;
-        padding: 0.3em 1em;
-
-        background-color: $White;
-        box-shadow: -0.1em -0.1em 0.3em rgba(0,0,0, 0.25) inset;
-        border-radius: 0.5em;
-
-        font-weight: 300;
-    }
-
-    .add_button {
-        padding: 0.5em 1em;
-
-        background-color: $Green;
-        transition: background-color 0.2s ease;
-        border: none;
-        border-radius: 0.5em;
-        cursor: pointer;
-        box-shadow: 0 0.15em 0.15em rgba(0, 0, 0, 0.75);
-
-        color: $Text-White-Headers;
-        @include apply-font($font-headings);
-        font-weight: 500;
-
-        &:hover {
-            background-color: $Green-Hover;
-        }
-    }
-}

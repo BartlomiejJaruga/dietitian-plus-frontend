@@ -14,11 +14,13 @@ import PatientQuestionnairePage from '@pages/PatientQuestionnairePage/PatientQue
 import PatientAboutMePage from '@pages/PatientAboutMePage/PatientAboutMePage'
 import DietitianDishesPage from '@pages/DietitianDishesPage/DietitianDishesPage'
 import DietitianPatientsPage from '@pages/DietitianPatientsPage/DietitianPatientsPage'
+import DietitianPatientsInfoPage from '@pages/DietitianPatientsInfoPage/DietitianPatientsInfoPage'
 import { useDispatch } from 'react-redux'
 import { useEffect } from 'react'
 import { sessionSavedSettingsDataENUM } from '@enums'
 import { loginUser, setAuthIsGettingLoaded } from '@slices/authSlice'
 import { setIsQuestionnaireCompleted } from '@slices/patientSlice'
+import DietitianPatientsDietPage from '@pages/DietitianPatientsDietPage/DietitianPatientsDietPage'
 
 function App() {
     const dispatch = useDispatch();
@@ -64,6 +66,8 @@ function App() {
                         <Route path="/dietitian/dashboard" element={<DietitianDashboardPage/>} />
                         <Route path="/dietitian/dishes" element={<DietitianDishesPage/>} />
                         <Route path="/dietitian/patients" element={<DietitianPatientsPage/>} />
+                        <Route path="/dietitian/patients/:patientId/info" element={<DietitianPatientsInfoPage/>} />
+                        <Route path="/dietitian/patients/:patientId/diet" element={<DietitianPatientsDietPage/>} />
                     </Route>
 
                     {/* Protected PATIENT routes */}

@@ -1,29 +1,55 @@
-.patient_dashboard_page_container {
-    margin-top: 3rem;
-}
-
-.return_to_home_page_button {
+.main_container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    cursor: pointer;
-}
 
-.return_to_home_page_button span {
-    margin-left: 0.5em;
-}
+    padding: 1em;
 
-.return_to_home_page_button_arrow {
-    color: inherit;
-}
+    .nothing_to_see_information_container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
-.return_to_home_page_button:hover {
-    color: $Green;
-    text-decoration: underline;
-}
+        min-width: 30vw;
+        max-width: 30vw;
 
-.return_to_home_page_button:hover .return_to_home_page_button_arrow {
-    fill: $Green;
+
+        .nothing_to_see_modal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1em;
+            margin-top: 7.5vh;
+            width: 100%;
+            background-color: $White;
+            border-radius: 1em;
+            box-shadow: 0 0 0.1em rgba(0,0,0, 0.4);
+            padding: 1.5em;
+
+            & > h3 {
+                @include apply-font($font-headings);
+                font-weight: 500;
+            }
+        }
+
+        .refresh_button {
+            margin-top: 2.5vh;
+
+            padding: 0.5em 1em;
+            background-color: $Green;
+            color: $Text-White-Texts;
+            border: 0;
+            border-radius: 0.5em;
+            font-size: 1.1em;
+            box-shadow: 0 0.15em 0.15em rgba(0, 0, 0, 0.75);
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $Green-Hover;
+            }
+        }
+    }
+    
 }

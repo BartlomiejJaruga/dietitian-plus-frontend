@@ -1,0 +1,65 @@
+.main_container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    & > h3 {
+        padding: 0.5em 0.75em;
+        align-self: flex-start;
+
+        border-radius: 0.5em;
+        background-color: $White;
+        box-shadow: -0.1em -0.1em 0.25em rgba(0,0,0, 0.4) inset;
+
+        font-size: 1em;
+        font-weight: 300;
+        text-align: left;
+    }
+}
+
+.patients_container {
+    min-height: 70vh;
+    width: 100%;
+
+    padding: 1.5em;
+    
+    border-radius: 0.5em;
+    background-color: $White;
+    box-shadow: 0.1em 0.1em 0.75em 0.1em rgba(0,0,0, 0.25) inset;
+
+    &--grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 3fr;
+        gap: 1em;
+        align-items: start;
+        align-content: start;
+    }
+
+    &--flex {
+        display: flex;
+        justify-content: center;
+    }
+
+    & > h4 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0.25em 0;
+
+        background-color: $Darker-White;
+        border-radius: 0.3em;
+    }
+
+    & > h5 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0.25em 0.5em;
+
+        border-radius: 0.3em;
+        box-shadow: 0 0 0.25em rgba(0,0,0, 0.4);
+    }
+}

@@ -131,6 +131,7 @@ export default function ProductSearchBar({
                 onClick={handleInputClick}
                 placeholder="Search product..."
                 className={styles.search_input}
+                autoComplete='off'
             />
             {isDropdownOpen && (
                 <ul className={styles.dropdown_list}>
